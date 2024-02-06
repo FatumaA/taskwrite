@@ -9,11 +9,7 @@ const AddTask = () => {
 			</div>
 			<div>
 				<label htmlFor="description">Task Description</label>
-				<textarea
-					type="text"
-					id="description"
-					placeholder="Describe your task"
-				/>
+				<textarea id="description" placeholder="Describe your task" />
 			</div>
 			<div>
 				<label htmlFor="description">Task Due Date</label>

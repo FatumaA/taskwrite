@@ -4,7 +4,6 @@ import React from "react";
 const Task = () => {
 	return (
 		<div>
-			<checkbox></checkbox>
 			<section>
 				<h2>Task Title</h2>
 				<p>Task Description</p>
