@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css";
 import AddTask from "./components/AddTask";
 import Task from "./components/Task";
 
