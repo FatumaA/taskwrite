@@ -1,9 +1,19 @@
-import { createDocument } from "../db/db";
-import { IPayload } from "../models/interface";
+import { createDocument, updateDocument } from "../db/db";
+import { IPayload, ITask } from "../models/interface";
 
-const AddTask = () => {
+// pass a task and an isEdit boolean
+// if isEdit is true, then the form will be populated with the task's data
+interface ITaskFormProps {
+	task: ITask | null;
+	isEdit: boolean;
+}
+
+const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		const form = document.getElementById("form") as HTMLFormElement;
+
 		const title = (e.currentTarget.elements[0] as HTMLInputElement).value;
 		const description = (e.currentTarget.elements[1] as HTMLTextAreaElement)
 			.value;
@@ -15,24 +25,33 @@ const AddTask = () => {
 			due_date: date,
 		};
 
-		const res = await createDocument(payload);
-
-		const form = document.getElementById("form") as HTMLFormElement;
+		if (isEdit && task) {
+			await updateDocument(payload, task!.$id);
+		} else {
+			await createDocument(payload);
+		}
 
 		form.reset();
-
-		console.log("FORM TEST", res);
 	};
 
 	return (
 		<form id="form" onSubmit={handleSubmit}>
 			<div>
 				<label htmlFor="title">Task Title</label>
-				<input type="text" id="title" placeholder="Title of your task" />
+				<input
+					type="text"
+					id="title"
+					placeholder="Title of your task"
+					defaultValue={isEdit ? task?.title : ""}
+				/>
 			</div>
 			<div>
 				<label htmlFor="description">Task Description</label>
-				<textarea id="description" placeholder="Describe your task" />
+				<textarea
+					id="description"
+					placeholder="Describe your task"
+					defaultValue={isEdit ? task?.description : ""}
+				/>
 			</div>
 			<div>
 				<label htmlFor="description">Task Due Date</label>
