@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import { deleteDocument, readDocuments } from "../db/db";
-import { Models } from "appwrite";
 import { ITask } from "../models/interface";
+import AddTask from "./AddTask";
 // import { ArrowDown } from "@appwrite.io/pink-icons";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
+	const [isEdit, setIsEdit] = useState(false);
+	const [selectedTask, setSelectedTask] = useState<ITask>({});
+
+	const closeModal = () => {
+		setIsEdit(!isEdit);
+	};
 
 	const getTasks = async () => {
 		const { documents } = await readDocuments();
@@ -14,8 +20,10 @@ const Task = () => {
 		return documents as ITask[];
 	};
 
-	const handleEdit = () => {
-		console.log("Edit");
+	const handleEdit = (currentTask: ITask) => {
+		console.log("Edit", currentTask);
+		setIsEdit(true);
+		setSelectedTask(currentTask);
 	};
 
 	const handleDelete = async (currentTaskId: string) => {
@@ -35,17 +43,25 @@ const Task = () => {
 	}, []);
 	return (
 		<div>
-			{tasks!.map((task: ITask) => {
+			{tasks.map((task: ITask) => {
 				return (
 					<section key={task.$id}>
 						<h2>{task.title}</h2>
 						<p>{task.description}</p>
 						<span>{task.due_date}</span>
-						<button onClick={handleEdit}>Edit</button>
+						<button onClick={() => handleEdit(task)}>Edit</button>
 						<button onClick={() => handleDelete(task.$id)}>Delete</button>
 					</section>
 				);
 			})}
+			{isEdit && (
+				<dialog open={true} id="modal">
+					<AddTask key={selectedTask.$id} task={selectedTask} isEdit={true} />
+					<button onClick={closeModal} id="closeModal">
+						Close
+					</button>
+				</dialog>
+			)}
 		</div>
 	);
 };
