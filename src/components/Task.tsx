@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { readDocuments } from "../db/db";
+import { deleteDocument, readDocuments } from "../db/db";
 import { Models } from "appwrite";
 import { ITask } from "../models/interface";
 // import { ArrowDown } from "@appwrite.io/pink-icons";
@@ -14,6 +14,16 @@ const Task = () => {
 		return documents as ITask[];
 	};
 
+	const handleEdit = () => {
+		console.log("Edit");
+	};
+
+	const handleDelete = async (currentTaskId: string) => {
+		console.log("Delete", currentTaskId);
+		const res = await deleteDocument(currentTaskId);
+		console.log("DELETE RES", res);
+	};
+
 	useEffect(() => {
 		getTasks()
 			.then((res) => {
@@ -25,12 +35,14 @@ const Task = () => {
 	}, []);
 	return (
 		<div>
-			{tasks!.map((task: Models.Document) => {
+			{tasks!.map((task: ITask) => {
 				return (
 					<section key={task.$id}>
 						<h2>{task.title}</h2>
 						<p>{task.description}</p>
 						<span>{task.due_date}</span>
+						<button onClick={handleEdit}>Edit</button>
+						<button onClick={() => handleDelete(task.$id)}>Delete</button>
 					</section>
 				);
 			})}
