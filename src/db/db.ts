@@ -1,8 +1,8 @@
 import { ID, databases } from "../utils/appwrite";
 import { IPayload } from "../models/interface";
 
-const dbID = import.meta.env.VITE_APPWRITE_DB_ID;
-const collectionID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
+const dbID: string = import.meta.env.VITE_APPWRITE_DB_ID;
+const collectionID: string = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
 
 const createDocument = async (payload: IPayload) => {
 	const res = await databases.createDocument(dbID, collectionID, ID.unique(), {
