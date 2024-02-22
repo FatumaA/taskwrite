@@ -4,12 +4,16 @@ import Task from "./components/Task";
 
 function App() {
 	return (
-		<>
-			<h1>Task App</h1>
-			<AddTask />
-			<hr />
-			<Task />
-		</>
+		<main className="container mx-auto border border-red-500">
+			<section className="max-w-5xl mx-auto m-24 p-16 border border-purple-500">
+				<h1 className=" text-6xl text-center py-8">
+					Taskwrite - Manage your tasks
+				</h1>
+				<AddTask task={null} isEdit={false} />
+				<hr />
+				<Task />
+			</section>
+		</main>
 	);
 }
 
