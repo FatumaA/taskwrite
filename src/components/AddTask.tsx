@@ -35,29 +35,46 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	};
 
 	return (
-		<form id="form" onSubmit={handleSubmit}>
-			<div>
-				<label htmlFor="title">Task Title</label>
+		<form id="form" onSubmit={handleSubmit} className=" m-8">
+			<div className="flex flex-col mb-4">
+				<label htmlFor="title" className="mb-1">
+					Task Title
+				</label>
 				<input
 					type="text"
 					id="title"
 					placeholder="Title of your task"
 					defaultValue={isEdit ? task?.title : ""}
+					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 			</div>
-			<div>
-				<label htmlFor="description">Task Description</label>
+			<div className="flex flex-col mb-4">
+				<label htmlFor="description" className="mb-1">
+					Task Description
+				</label>
 				<textarea
 					id="description"
 					placeholder="Describe your task"
 					defaultValue={isEdit ? task?.description : ""}
+					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 			</div>
-			<div>
-				<label htmlFor="description">Task Due Date</label>
-				<input type="date" id="date" />
+			<div className="flex flex-col mb-4">
+				<label htmlFor="description" className="mb-1">
+					Task Due Date
+				</label>
+				<input
+					type="date"
+					id="date"
+					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+				/>
 			</div>
-			<button type="submit">Add Task</button>
+			<button
+				type="submit"
+				className=" bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
+			>
+				{task ? "Edit Task" : "Add Task"}
+			</button>
 		</form>
 	);
 };
