@@ -35,7 +35,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	};
 
 	return (
-		<form id="form" onSubmit={handleSubmit} className=" m-8">
+		<form id="form" onSubmit={handleSubmit} className="m-8">
 			<div className="flex flex-col mb-4">
 				<label htmlFor="title" className="mb-1">
 					Task Title
