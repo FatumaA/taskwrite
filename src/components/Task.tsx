@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { deleteDocument, readDocuments, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import AddTask from "./AddTask";
 
 const Task = () => {
@@ -60,19 +61,29 @@ const Task = () => {
 				return (
 					<section
 						key={task.$id}
-						className="m-8 border border-gray-400 rounded-md p-4 flex justify-between"
+						className="m-8 border border-gray-400 rounded-md p-4 flex justify-between flex-wrap gap-5 hover:shadow-lg transition duration-300 ease-in-out"
 					>
-						<section className="w-4/6">
+						<section className="">
 							<h2 className="text-2xl font-medium py-2">{task.title}</h2>
 							<p className="py-1 mb-5">{task.description}</p>
 							<span className=" font-extralight text-gray-600">{`Due date: ${task.due_date}`}</span>
 						</section>
 						<section className="flex flex-col justify-between">
-							<div className="flex justify-between py-1">
-								<button onClick={() => handleEdit(task)} className="py-2">
-									Edit
+							<div className="flex gap-2 py-1">
+								<button
+									onClick={() => handleEdit(task)}
+									className="flex items-center bg-green-400 rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out"
+								>
+									<span className="mr-1">Edit</span>
+									<PencilSquareIcon height={25} className="hidden md:flex" />
 								</button>
-								<button onClick={() => handleDelete(task.$id)}>Delete</button>
+								<button
+									onClick={() => handleDelete(task.$id)}
+									className="flex items-center bg-red-400 rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out"
+								>
+									<span className="mr-1">Delete</span>
+									<TrashIcon height={25} className="hidden md:flex" />
+								</button>
 							</div>
 							<div className="flex justify-center items-center">
 								<label htmlFor="done" className="mr-2 font-light">
