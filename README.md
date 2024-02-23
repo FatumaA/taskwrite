@@ -10,6 +10,8 @@ This is a task app that uses Appwrite as a backend.
 
 - [x] User can set task due date
 
+- [x] Add a simple UI
+
 **Features - Nice to haves**
 
 - [ ] User can set task priority
