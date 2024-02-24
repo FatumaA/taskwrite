@@ -40,7 +40,8 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		form.reset();
 	};
 
-	const generateDesc = async () => {
+	const generateDesc = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		const title = titleText.current?.value;
 
 		const prompt = `Provide a description for this task: ${title}. Keep the description to a maximum of 30 words`;
@@ -75,7 +76,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 				<textarea
 					id="description"
 					placeholder="Describe your task"
-					defaultValue={isEdit ? task?.description : val}
+					defaultValue={isEdit ? task?.description : ""}
 					value={val}
 					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
