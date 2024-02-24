@@ -22,7 +22,7 @@ This is a task app that uses Appwrite as a backend.
 
 - [ ] Support Dark Mode
 
-- [ ] AI can generate task descriptions based on task title
+- [x] AI can generate task descriptions based on task title
 
 - [ ] Tasks are searchable
 
