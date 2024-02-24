@@ -1,6 +1,8 @@
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { createDocument, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
+import { callAI } from "../utils/ai";
+import { RefObject, useRef, useState } from "react";
 
 // pass a task and an isEdit boolean
 // if isEdit is true, then the form will be populated with the task's data
@@ -10,7 +12,10 @@ interface ITaskFormProps {
 }
 
 const AddTask = ({ task, isEdit }: ITaskFormProps) => {
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const [val, setVal] = useState("");
+	const titleText: RefObject<HTMLInputElement> = useRef(null);
+
+	const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const form = document.getElementById("form") as HTMLFormElement;
@@ -35,13 +40,27 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		form.reset();
 	};
 
+	const generateDesc = async () => {
+		const title = titleText.current?.value;
+
+		const prompt = `Provide a description for this task: ${title}. Keep the description to a maximum of 30 words`;
+
+		try {
+			const res = await callAI(prompt);
+			return setVal(await res.text());
+		} catch (error) {
+			console.log("ERROR HUGGING FACE API: " + error);
+		}
+	};
+
 	return (
-		<form id="form" onSubmit={handleSubmit} className="m-8">
+		<form id="form" onSubmit={handleSubmitTask} className="m-8">
 			<div className="flex flex-col mb-4">
 				<label htmlFor="title" className="mb-1">
 					Task Title
 				</label>
 				<input
+					ref={titleText}
 					type="text"
 					id="title"
 					placeholder="Title of your task"
@@ -56,10 +75,14 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 				<textarea
 					id="description"
 					placeholder="Describe your task"
-					defaultValue={isEdit ? task?.description : ""}
+					defaultValue={isEdit ? task?.description : val}
+					value={val}
 					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
-				<button className="bg-gray-200 rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out">
+				<button
+					onClick={generateDesc}
+					className="bg-gray-200 rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out"
+				>
 					<span className="mr-1">Generate description</span>
 					<SparklesIcon height={20} />
 				</button>
