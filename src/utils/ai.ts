@@ -1,5 +1,4 @@
 import { HfInference } from "@huggingface/inference";
-import { experimental_buildOpenAssistantPrompt } from "ai/prompts";
 import { HuggingFaceStream, StreamingTextResponse } from "ai";
 
 // Create a new HuggingFace Inference instance
