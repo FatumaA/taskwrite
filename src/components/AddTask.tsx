@@ -1,3 +1,4 @@
+import { SparklesIcon } from "@heroicons/react/24/solid";
 import { createDocument, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
 
@@ -58,6 +59,10 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 					defaultValue={isEdit ? task?.description : ""}
 					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
+				<button className="bg-gray-200 rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out">
+					<span className="mr-1">Generate description</span>
+					<SparklesIcon height={20} />
+				</button>
 			</div>
 			<div className="flex flex-col mb-4">
 				<label htmlFor="description" className="mb-1">
