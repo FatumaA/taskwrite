@@ -4,6 +4,7 @@ import { IPayload, ITask } from "../models/interface";
 import { callAI } from "../utils/ai";
 import { RefObject, useRef, useState } from "react";
 import Speaker from "../components/speaker";
+import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 
 // pass a task and an isEdit boolean
 // if isEdit is true, then the form will be populated with the task's data
@@ -13,6 +14,7 @@ interface ITaskFormProps {
 }
 
 const AddTask = ({ task, isEdit }: ITaskFormProps) => {
+	const { transcript } = useSpeechToTextHelper();
 	const [val, setVal] = useState("");
 	const titleText: RefObject<HTMLInputElement> = useRef(null);
 
@@ -56,59 +58,57 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	};
 
 	return (
-		<>
-			<Speaker />
-			<form id="form" onSubmit={handleSubmitTask} className="m-8">
-				<div className="flex flex-col mb-4">
-					<label htmlFor="title" className="mb-1">
-						Task Title
-					</label>
-					<input
-						ref={titleText}
-						type="text"
-						id="title"
-						placeholder="Title of your task"
-						defaultValue={isEdit ? task?.title : ""}
-						className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
-					/>
+		<form id="form" onSubmit={handleSubmitTask} className="m-8">
+			<div className="flex flex-col mb-4">
+				<div className="flex flex-row justify-between items-center">
+					<label htmlFor="title">Task Title</label>
+					<Speaker />
 				</div>
-				<div className="flex flex-col mb-4">
-					<label htmlFor="description" className="mb-1">
-						Task Description
-					</label>
-					<textarea
-						id="description"
-						placeholder="Describe your task"
-						defaultValue={isEdit ? task?.description : ""}
-						value={val}
-						className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
-					/>
-					<button
-						onClick={generateDesc}
-						className="bg-gray-200 rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out"
-					>
-						<span className="mr-1">Generate description</span>
-						<SparklesIcon height={20} />
-					</button>
-				</div>
-				<div className="flex flex-col mb-4">
-					<label htmlFor="description" className="mb-1">
-						Task Due Date
-					</label>
-					<input
-						type="date"
-						id="date"
-						className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
-					/>
-				</div>
+				<input
+					ref={titleText}
+					type="text"
+					id="title"
+					placeholder="Title of your task"
+					value={isEdit ? task?.title : transcript ?? ""}
+					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+				/>
+			</div>
+			<div className="flex flex-col mb-4">
+				<label htmlFor="description" className="mb-1">
+					Task Description
+				</label>
+				<textarea
+					id="description"
+					placeholder="Describe your task"
+					defaultValue={isEdit ? task?.description : ""}
+					value={val}
+					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+				/>
 				<button
-					type="submit"
-					className=" bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
+					onClick={generateDesc}
+					className="bg-gray-200 rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out"
 				>
-					{task ? "Edit Task" : "Add Task"}
+					<span className="mr-1">Generate description</span>
+					<SparklesIcon height={20} />
 				</button>
-			</form>
-		</>
+			</div>
+			<div className="flex flex-col mb-4">
+				<label htmlFor="description" className="mb-1">
+					Task Due Date
+				</label>
+				<input
+					type="date"
+					id="date"
+					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+				/>
+			</div>
+			<button
+				type="submit"
+				className=" bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
+			>
+				{task ? "Edit Task" : "Add Task"}
+			</button>
+		</form>
 	);
 };
 
