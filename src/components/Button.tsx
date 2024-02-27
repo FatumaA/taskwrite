@@ -1,12 +1,11 @@
-import React from "react";
-
 interface ButtonProps {
 	bgColor: string;
 	textColor?: string;
-	text: string;
+	text?: string;
 	icon?: React.ElementType;
-	iconClasses: string;
+	iconClasses?: string;
 	handleClick: () => void;
+	title?: string;
 }
 
 function Button({
@@ -16,11 +15,13 @@ function Button({
 	icon,
 	iconClasses,
 	handleClick,
+	title,
 }: ButtonProps) {
 	const Icon = icon;
 	return (
 		<button
 			onClick={handleClick}
+			title={title ?? ""}
 			className={`flex items-center ${bgColor} ${
 				textColor ?? null
 			} rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out`}
