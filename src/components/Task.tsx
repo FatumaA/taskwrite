@@ -3,6 +3,7 @@ import { deleteDocument, readDocuments, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import AddTask from "./AddTask";
+import Button from "./Button";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
@@ -70,20 +71,20 @@ const Task = () => {
 						</section>
 						<section className="flex flex-col justify-between">
 							<div className="flex gap-2 py-1">
-								<button
-									onClick={() => handleEdit(task)}
-									className="flex items-center bg-green-400 rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out"
-								>
-									<span className="mr-1">Edit</span>
-									<PencilSquareIcon height={25} className="hidden md:flex" />
-								</button>
-								<button
-									onClick={() => handleDelete(task.$id)}
-									className="flex items-center bg-red-400 rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out"
-								>
-									<span className="mr-1">Delete</span>
-									<TrashIcon height={25} className="hidden md:flex" />
-								</button>
+								<Button
+									bgColor="bg-green-400"
+									text="Edit"
+									icon={PencilSquareIcon}
+									iconClasses="hidden md:flex"
+									handleClick={() => handleEdit(task)}
+								/>
+								<Button
+									bgColor="bg-red-400"
+									text="Delete"
+									icon={TrashIcon}
+									iconClasses="hidden md:flex"
+									handleClick={() => handleDelete(task.$id)}
+								/>
 							</div>
 							<div className="flex justify-center items-center">
 								<label htmlFor="done" className="mr-2 font-light">
