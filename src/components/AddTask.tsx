@@ -3,7 +3,7 @@ import { createDocument, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
 import { callAI } from "../utils/ai";
 import { RefObject, useRef, useState } from "react";
-import Speaker from "../components/speaker";
+import Speaker from "../components/Speaker";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 
 // pass a task and an isEdit boolean
@@ -15,7 +15,15 @@ interface ITaskFormProps {
 
 const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	const { transcript } = useSpeechToTextHelper();
+	const [tr, setTr] = useState(transcript);
 	const [val, setVal] = useState("");
+
+	const t = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		setTr("");
+		console.log(tr);
+	};
+
 	const titleText: RefObject<HTMLInputElement> = useRef(null);
 
 	const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +51,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		form.reset();
 	};
 
-	const generateDesc = async (e: React.FormEvent<HTMLFormElement>) => {
+	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		const title = titleText.current?.value;
 
@@ -62,7 +70,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 			<div className="flex flex-col mb-4">
 				<div className="flex flex-row justify-between items-center">
 					<label htmlFor="title">Task Title</label>
-					<Speaker />
+					<Speaker handleClear={t} />
 				</div>
 				<input
 					ref={titleText}
@@ -72,15 +80,20 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 					value={isEdit ? task?.title : transcript ?? ""}
 					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
+				{transcript + "Empty"}
 			</div>
 			<div className="flex flex-col mb-4">
-				<label htmlFor="description" className="mb-1">
-					Task Description
-				</label>
+				<div className="flex flex-row justify-between items-center">
+					<label htmlFor="description" className="mb-1">
+						Task Description
+					</label>
+					<Speaker handleClear={t} />
+				</div>
+
 				<textarea
 					id="description"
 					placeholder="Describe your task"
-					defaultValue={isEdit ? task?.description : ""}
+					defaultValue={isEdit ? task?.description : transcript ?? ""}
 					value={val}
 					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
@@ -104,7 +117,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 			</div>
 			<button
 				type="submit"
-				className=" bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
+				className="bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
 			>
 				{task ? "Edit Task" : "Add Task"}
 			</button>

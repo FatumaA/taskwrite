@@ -1,38 +1,37 @@
 // import "regenerator-runtime/runtime";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
-import {
-	LockClosedIcon,
-	PlayIcon,
-	StopIcon,
-	XCircleIcon,
-} from "@heroicons/react/24/solid";
+import { SpeakerWaveIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 import SpeechRecognition from "react-speech-recognition";
 
-function Speaker() {
-	const { listening, resetTranscript } = useSpeechToTextHelper();
+interface SpeakerProps {
+	handleClear: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+function Speaker({ handleClear }: SpeakerProps) {
+	const { listening, error } = useSpeechToTextHelper();
+
+	const handleSpeech = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		SpeechRecognition.startListening();
+	};
 
 	return (
 		<div>
+			{error && <div>{error}</div>}
 			<div className="flex gap-2 py-1 items-center text-center justify-center">
 				<span>{listening ? "Mic on" : "Mic off"}</span>
 				<Button
 					bgColor="bg-green-200"
 					title="Start"
-					icon={PlayIcon}
-					handleClick={SpeechRecognition.startListening}
-				/>
-				<Button
-					bgColor="bg-red-200"
-					title="Stop"
-					icon={StopIcon}
-					handleClick={SpeechRecognition.stopListening}
+					icon={SpeakerWaveIcon}
+					handleClick={handleSpeech}
 				/>
 				<Button
 					bgColor="bg-gray-200"
 					title="reset"
 					icon={XCircleIcon}
-					handleClick={resetTranscript}
+					handleClick={handleClear}
 				/>
 			</div>
 		</div>
