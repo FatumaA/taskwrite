@@ -26,6 +26,6 @@ This is a task app that uses Appwrite as a backend.
 
 - [ ] Tasks are searchable
 
-- [ ] User can add tasks via voice commands
+- [x] User can add tasks via voice commands
 
 - [ ] User can get push notifications when tasks are almost due
