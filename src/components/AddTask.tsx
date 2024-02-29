@@ -2,7 +2,7 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import { createDocument, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
 import { callAI } from "../utils/ai";
-import { RefObject, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Speaker from "../components/Speaker";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 
@@ -14,17 +14,24 @@ interface ITaskFormProps {
 }
 
 const AddTask = ({ task, isEdit }: ITaskFormProps) => {
-	const { transcript } = useSpeechToTextHelper();
-	const [tr, setTr] = useState(transcript);
-	const [val, setVal] = useState("");
+	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
-	const t = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const [titleVal, setTitleVal] = useState("");
+	const [textAreaVal, setTextAreaVal] = useState("");
+
+	useEffect(() => {
+		if (isEdit && task) {
+			setTitleVal(task.title);
+			setTextAreaVal(task.description);
+		} else {
+			setTitleVal(transcript || "");
+		}
+	}, [isEdit, task, transcript]);
+
+	const clearTranscript = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		setTr("");
-		console.log(tr);
+		resetTranscript();
 	};
-
-	const titleText: RefObject<HTMLInputElement> = useRef(null);
 
 	const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -53,13 +60,14 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 
 	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		const title = titleText.current?.value;
 
-		const prompt = `Provide a description for this task: ${title}. Keep the description to a maximum of 30 words`;
+		if (!titleVal) return alert("Please provide a title for the task");
+
+		const prompt = `Provide a description for this task: ${titleVal}. Keep the description to a maximum of 30 words`;
 
 		try {
 			const res = await callAI(prompt);
-			return setVal(await res.text());
+			return setTextAreaVal(await res.text());
 		} catch (error) {
 			console.log("ERROR HUGGING FACE API: " + error);
 		}
@@ -70,31 +78,27 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 			<div className="flex flex-col mb-4">
 				<div className="flex flex-row justify-between items-center">
 					<label htmlFor="title">Task Title</label>
-					<Speaker handleClear={t} />
+					<Speaker handleClear={clearTranscript} />
 				</div>
 				<input
-					ref={titleText}
 					type="text"
 					id="title"
 					placeholder="Title of your task"
-					value={isEdit ? task?.title : transcript ?? ""}
+					value={titleVal}
+					onChange={(e) => setTitleVal(e.target.value)}
 					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
-				{transcript + "Empty"}
 			</div>
 			<div className="flex flex-col mb-4">
-				<div className="flex flex-row justify-between items-center">
-					<label htmlFor="description" className="mb-1">
-						Task Description
-					</label>
-					<Speaker handleClear={t} />
-				</div>
+				<label htmlFor="description" className="mb-1">
+					Task Description
+				</label>
 
 				<textarea
 					id="description"
 					placeholder="Describe your task"
-					defaultValue={isEdit ? task?.description : transcript ?? ""}
-					value={val}
+					value={textAreaVal}
+					onChange={(e) => setTextAreaVal(e.target.value)}
 					className="border rounded-sm border-slate-800 p-2 h-32 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 				<button
