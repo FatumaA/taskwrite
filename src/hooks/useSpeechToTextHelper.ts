@@ -16,5 +16,10 @@ export function useSpeechToTextHelper() {
 		setError("Browser doesn't support speech recognition.");
 	}
 
-	return { error, transcript, listening, resetTranscript };
+	return {
+		error,
+		listening,
+		transcript,
+		resetTranscript,
+	};
 }
