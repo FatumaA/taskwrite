@@ -1,11 +1,11 @@
-// import "regenerator-runtime/runtime";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
-import { SpeakerWaveIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { MicrophoneIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 import SpeechRecognition from "react-speech-recognition";
 
 interface SpeakerProps {
 	handleClear: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	// id: string;
 }
 
 function Speaker({ handleClear }: SpeakerProps) {
@@ -24,7 +24,7 @@ function Speaker({ handleClear }: SpeakerProps) {
 				<Button
 					bgColor="bg-green-200"
 					title="Start"
-					icon={SpeakerWaveIcon}
+					icon={MicrophoneIcon}
 					handleClick={handleSpeech}
 				/>
 				<Button
