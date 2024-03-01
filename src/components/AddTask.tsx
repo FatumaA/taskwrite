@@ -52,8 +52,6 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		if (!titleVal)
 			return setValidationError("Please provide atleast a title for the task");
 
-		const form = document.getElementById("form") as HTMLFormElement;
-
 		const payload: IPayload = {
 			title: titleVal,
 			description: textAreaVal,
@@ -66,7 +64,11 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 			await createDocument(payload);
 		}
 
-		form.reset();
+		// reset form
+		setTitleVal("");
+		setTextAreaVal("");
+		setDueDate(new Date());
+		setValidationError("");
 	};
 
 	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
