@@ -18,6 +18,9 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 
 	const [titleVal, setTitleVal] = useState("");
 	const [textAreaVal, setTextAreaVal] = useState("");
+	const [dueDate, setDueDate] = useState(
+		isEdit && task?.due_date ? new Date(task.due_date) : new Date()
+	);
 
 	useEffect(() => {
 		if (isEdit && task) {
@@ -38,15 +41,10 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 
 		const form = document.getElementById("form") as HTMLFormElement;
 
-		const title = (e.currentTarget.elements[0] as HTMLInputElement).value;
-		const description = (e.currentTarget.elements[1] as HTMLTextAreaElement)
-			.value;
-		const date = (e.currentTarget.elements[2] as HTMLInputElement).value;
-
 		const payload: IPayload = {
-			title,
-			description,
-			due_date: date,
+			title: titleVal,
+			description: textAreaVal,
+			due_date: dueDate,
 		};
 
 		if (isEdit && task) {
@@ -116,6 +114,8 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 				<input
 					type="date"
 					id="date"
+					value={dueDate!.toISOString().split("T")[0]}
+					onChange={(e) => setDueDate(new Date(e.target.value))}
 					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 			</div>
