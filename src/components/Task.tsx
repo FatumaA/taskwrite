@@ -62,11 +62,12 @@ const Task = () => {
 				return (
 					<section
 						key={task.$id}
-						className="m-8 border border-gray-400 rounded-md p-4 flex justify-between flex-wrap gap-5 hover:shadow-lg transition duration-300 ease-in-out"
+						className="m-8 border border-gray-400 rounded-md p-4 flex flex-col md:flex-row justify-between gap-5 hover:shadow-lg transition duration-300 ease-in-out"
 					>
-						<section className="">
+						<section>
 							<h2 className="text-2xl font-medium py-2">{task.title}</h2>
 							<p className="py-1 mb-5">{task.description}</p>
+							{task.priority}
 							<span className="font-extralight text-gray-600">
 								<span className="font-medium">Due on: </span>
 								<span className="underline">{`${new Date(
@@ -91,7 +92,7 @@ const Task = () => {
 									handleClick={() => handleDelete(task.$id)}
 								/>
 							</div>
-							<div className="flex justify-center items-center">
+							<div>
 								<label htmlFor="done" className="mr-2 font-light">
 									Mark as complete
 								</label>
