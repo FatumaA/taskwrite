@@ -22,6 +22,8 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		isEdit && task?.due_date ? new Date(task.due_date) : new Date()
 	);
 
+	const [isValidationError, setValidationError] = useState("");
+
 	useEffect(() => {
 		if (isEdit && task) {
 			setTitleVal(task.title);
@@ -31,6 +33,14 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		}
 	}, [isEdit, task, transcript]);
 
+	const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTitleVal(e.target.value);
+
+		if (e.target.value.trim() !== "") {
+			setValidationError("");
+		}
+	};
+
 	const clearTranscript = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		resetTranscript();
@@ -38,6 +48,9 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 
 	const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		if (!titleVal)
+			return setValidationError("Please provide atleast a title for the task");
 
 		const form = document.getElementById("form") as HTMLFormElement;
 
@@ -73,6 +86,9 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 
 	return (
 		<form id="form" onSubmit={handleSubmitTask} className="m-8">
+			{isValidationError && (
+				<span className="text-red-500">{isValidationError}</span>
+			)}
 			<div className="flex flex-col mb-4">
 				<div className="flex flex-row justify-between items-center">
 					<label htmlFor="title">Task Title</label>
@@ -83,8 +99,12 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 					id="title"
 					placeholder="Title of your task"
 					value={titleVal}
-					onChange={(e) => setTitleVal(e.target.value)}
-					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+					onChange={handleTitleChange}
+					className={`border rounded-sm p-2 focus:outline-none focus:ring-1 ${
+						isValidationError
+							? "border-red-600 focus:ring-red-500 invalid:focus:ring-red-600"
+							: "border-slate-800 focus:ring-slate-900"
+					}`}
 				/>
 			</div>
 			<div className="flex flex-col mb-4">
