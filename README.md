@@ -14,7 +14,7 @@ This is a task app that uses Appwrite as a backend.
 
 **Features - Nice to haves**
 
-- [ ] User can set task priority
+- [x] User can set task priority
 
 - [ ] User can sort tasks
 
