@@ -21,7 +21,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	const [dueDate, setDueDate] = useState(
 		isEdit && task?.due_date ? new Date(task.due_date) : new Date()
 	);
-	const [priority, setPriority] = useState("low");
+	const [priority, setPriority] = useState(isEdit ? task?.priority : "low");
 
 	const [isValidationError, setValidationError] = useState("");
 
