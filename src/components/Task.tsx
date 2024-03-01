@@ -8,7 +8,7 @@ import Button from "./Button";
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
 	const [isEdit, setIsEdit] = useState(false);
-	const [selectedTask, setSelectedTask] = useState<ITask>({});
+	const [selectedTask, setSelectedTask] = useState<ITask>();
 	const [isDone, setIsDone] = useState(false);
 
 	const closeModal = () => {
@@ -112,7 +112,7 @@ const Task = () => {
 			{isEdit && (
 				// <AddTask key={selectedTask.$id} task={selectedTask} isEdit={true} />
 				<dialog open={true} id="modal">
-					<AddTask key={selectedTask.$id} task={selectedTask} isEdit={true} />
+					<AddTask key={selectedTask!.$id} task={selectedTask!} isEdit={true} />
 					<button onClick={closeModal} id="closeModal">
 						Close
 					</button>
