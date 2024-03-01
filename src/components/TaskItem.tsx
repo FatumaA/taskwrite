@@ -34,15 +34,19 @@ function TaskItem({ task }: TaskItemProps) {
 		console.log("DELETE RES", res);
 	};
 
-	const handleCheckbox = async (currentTask: IPayload, id: string) => {
-		if (isDone === false) return;
+	const handleCheckbox = async (
+		currentTask: IPayload,
+		id: string,
+		checkedVal: boolean
+	) => {
+		if (!checkedVal) return;
 
 		const payload: IPayload = {
 			title: currentTask.title,
 			description: currentTask.description,
 			due_date: currentTask.due_date,
 			priority: currentTask.priority,
-			done: isDone,
+			done: checkedVal,
 		};
 
 		await updateDocument(payload, id);
@@ -132,11 +136,11 @@ function TaskItem({ task }: TaskItemProps) {
 								</label>
 								<input
 									type="checkbox"
+									checked={isDone}
 									onChange={(e) => {
 										setIsDone(e.target.checked);
-										handleCheckbox(task, task.$id);
+										handleCheckbox(task, task.$id, e.target.checked);
 									}}
-									checked={isDone}
 									className="size-5 accent-pink-600 rounded-sm"
 								/>
 							</div>
