@@ -1,6 +1,5 @@
 import "./index.css";
 import AddTask from "./components/AddTask";
-import Task from "./components/Task";
 
 function App() {
 	return (
@@ -10,8 +9,6 @@ function App() {
 					Taskwrite - Manage your tasks
 				</h1>
 				<AddTask task={null} isEdit={false} />
-				<hr />
-				<Task />
 			</section>
 		</main>
 	);
