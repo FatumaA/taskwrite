@@ -11,9 +11,10 @@ import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 interface ITaskFormProps {
 	task: ITask | null;
 	isEdit: boolean;
+	setIsEdit: (isEdit: boolean) => void;
 }
 
-const AddTask = ({ task, isEdit }: ITaskFormProps) => {
+const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
 	const [titleVal, setTitleVal] = useState("");
@@ -62,6 +63,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 
 		if (isEdit && task) {
 			await updateDocument(payload, task!.$id);
+			setIsEdit(false);
 		} else {
 			await createDocument(payload);
 		}

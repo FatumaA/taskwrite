@@ -44,8 +44,6 @@ const Task = () => {
 		console.log("Edit", currentTask);
 		setIsEdit(true);
 		setSelectedTask(currentTask);
-		// return <AddTask key={currentTask.$id} task={currentTask} isEdit={true} />;
-		// navigate("/", { state: { isEdit: true, task: selectedTask } });
 	};
 
 	const handleDelete = async (currentTaskId: string) => {
@@ -80,10 +78,18 @@ const Task = () => {
 						<span>Close </span>
 						<XMarkIcon height={25} />
 					</button>
-					<AddTask key={selectedTask!.$id} task={selectedTask!} isEdit={true} />
+					<AddTask
+						key={selectedTask!.$id}
+						task={selectedTask!}
+						isEdit={true}
+						setIsEdit={setIsEdit}
+					/>
 				</dialog>
 			)}
 			<section className="max-w-5xl mx-auto m-12 p-0 md:p-16">
+				<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
+					Your Tasks
+				</h1>
 				{tasks.map((task: ITask) => {
 					return (
 						<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out">
@@ -103,7 +109,6 @@ const Task = () => {
 									</span>
 								</span>
 							)}
-
 							<section
 								key={task.$id}
 								className="flex flex-col md:flex-row justify-between gap-5"
