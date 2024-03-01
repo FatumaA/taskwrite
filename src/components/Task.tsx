@@ -60,54 +60,73 @@ const Task = () => {
 		<div>
 			{tasks.map((task: ITask) => {
 				return (
-					<section
-						key={task.$id}
-						className="m-8 border border-gray-400 rounded-md p-4 flex flex-col md:flex-row justify-between gap-5 hover:shadow-lg transition duration-300 ease-in-out"
-					>
-						<section>
-							<h2 className="text-2xl font-medium py-2">{task.title}</h2>
-							<p className="py-1 mb-5">{task.description}</p>
-							{task.priority}
-							<span className="font-extralight text-gray-600">
-								<span className="font-medium">Due on: </span>
-								<span className="underline">{`${new Date(
-									task.due_date
-								).toLocaleDateString()}`}</span>
+					<div className="m-8 border border-gray-400 rounded-md p-4">
+						{task.priority && (
+							<span>
+								<span className="font-medium">Task priority: </span>
+								<span
+									className={`${
+										task.priority === "low"
+											? "bg-yellow-400"
+											: task.priority === "medium"
+											? "bg-orange-400"
+											: "bg-red-400"
+									} py-1 px-2 rounded-md`}
+								>
+									{task.priority}
+								</span>
 							</span>
+						)}
+
+						<section
+							key={task.$id}
+							className="flex flex-col md:flex-row justify-between gap-5 hover:shadow-lg transition duration-300 ease-in-out"
+						>
+							<section>
+								<h2 className="text-2xl font-medium py-2">{task.title}</h2>
+								<p className="py-1 mb-5">{task.description}</p>
+
+								<span className="font-extralight text-gray-600">
+									<span className="font-medium">Due on: </span>
+									<span className="underline">{`${new Date(
+										task.due_date
+									).toLocaleDateString()}`}</span>
+								</span>
+							</section>
+							<section className="flex flex-col justify-between">
+								<div className="flex gap-2 py-1">
+									<Button
+										bgColor="bg-green-400"
+										text="Edit"
+										icon={PencilSquareIcon}
+										iconClasses="hidden md:flex"
+										handleClick={() => handleEdit(task)}
+									/>
+									<Button
+										bgColor="bg-red-400"
+										text="Delete"
+										icon={TrashIcon}
+										iconClasses="hidden md:flex"
+										handleClick={() => handleDelete(task.$id)}
+									/>
+								</div>
+								<div className="flex items-center">
+									<label htmlFor="done" className="mr-2 font-light">
+										Mark as complete
+									</label>
+									<input
+										type="checkbox"
+										onChange={(e) => {
+											setIsDone(e.target.checked);
+											handleCheckbox(task, task.$id);
+										}}
+										checked={task.done}
+										className="size-5 accent-pink-600 rounded-sm"
+									/>
+								</div>
+							</section>
 						</section>
-						<section className="flex flex-col justify-between">
-							<div className="flex gap-2 py-1">
-								<Button
-									bgColor="bg-green-400"
-									text="Edit"
-									icon={PencilSquareIcon}
-									iconClasses="hidden md:flex"
-									handleClick={() => handleEdit(task)}
-								/>
-								<Button
-									bgColor="bg-red-400"
-									text="Delete"
-									icon={TrashIcon}
-									iconClasses="hidden md:flex"
-									handleClick={() => handleDelete(task.$id)}
-								/>
-							</div>
-							<div>
-								<label htmlFor="done" className="mr-2 font-light">
-									Mark as complete
-								</label>
-								<input
-									type="checkbox"
-									onChange={(e) => {
-										setIsDone(e.target.checked);
-										handleCheckbox(task, task.$id);
-									}}
-									checked={task.done}
-									className="size-5 accent-pink-600 rounded-sm"
-								/>
-							</div>
-						</section>
-					</section>
+					</div>
 				);
 			})}
 			{isEdit && (
