@@ -21,6 +21,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 	const [dueDate, setDueDate] = useState(
 		isEdit && task?.due_date ? new Date(task.due_date) : new Date()
 	);
+	const [priority, setPriority] = useState("low");
 
 	const [isValidationError, setValidationError] = useState("");
 
@@ -56,6 +57,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 			title: titleVal,
 			description: textAreaVal,
 			due_date: dueDate,
+			priority: priority,
 		};
 
 		if (isEdit && task) {
@@ -68,6 +70,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 		setTitleVal("");
 		setTextAreaVal("");
 		setDueDate(new Date());
+		setPriority("low");
 		setValidationError("");
 	};
 
@@ -91,7 +94,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 			{isValidationError && (
 				<span className="text-red-500">{isValidationError}</span>
 			)}
-			<div className="flex flex-col mb-4">
+			<div className="flex flex-col mb-6">
 				<div className="flex flex-row justify-between items-center">
 					<label htmlFor="title">Task Title</label>
 					<Speaker handleClear={clearTranscript} />
@@ -109,7 +112,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 					}`}
 				/>
 			</div>
-			<div className="flex flex-col mb-4">
+			<div className="flex flex-col mb-6">
 				<label htmlFor="description" className="mb-1">
 					Task Description
 				</label>
@@ -129,7 +132,22 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 					<SparklesIcon height={20} />
 				</button>
 			</div>
-			<div className="flex flex-col mb-4">
+			<div className="flex flex-col mb-6">
+				<label htmlFor="description" className="mb-1">
+					Task Priority
+				</label>
+				<select
+					id="priority"
+					value={priority}
+					onChange={(e) => setPriority(e.target.value)}
+					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+				>
+					<option value="low">Low</option>
+					<option value="medium">Medium</option>
+					<option value="high">High</option>
+				</select>
+			</div>
+			<div className="flex flex-col mb-6">
 				<label htmlFor="description" className="mb-1">
 					Task Due Date
 				</label>
@@ -141,6 +159,7 @@ const AddTask = ({ task, isEdit }: ITaskFormProps) => {
 					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 			</div>
+
 			<button
 				type="submit"
 				className="bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
