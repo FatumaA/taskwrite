@@ -67,7 +67,12 @@ const Task = () => {
 						<section className="">
 							<h2 className="text-2xl font-medium py-2">{task.title}</h2>
 							<p className="py-1 mb-5">{task.description}</p>
-							<span className=" font-extralight text-gray-600">{`Due date: ${task.due_date}`}</span>
+							<span className="font-extralight text-gray-600">
+								<span className="font-medium">Due on: </span>
+								<span className="underline">{`${new Date(
+									task.due_date
+								).toLocaleDateString()}`}</span>
+							</span>
 						</section>
 						<section className="flex flex-col justify-between">
 							<div className="flex gap-2 py-1">
