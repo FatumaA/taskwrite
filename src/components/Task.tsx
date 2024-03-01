@@ -60,7 +60,7 @@ const Task = () => {
 		<div>
 			{tasks.map((task: ITask) => {
 				return (
-					<div className="m-8 border border-gray-400 rounded-md p-4">
+					<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out">
 						{task.priority && (
 							<span>
 								<span className="font-medium">Task priority: </span>
@@ -80,7 +80,7 @@ const Task = () => {
 
 						<section
 							key={task.$id}
-							className="flex flex-col md:flex-row justify-between gap-5 hover:shadow-lg transition duration-300 ease-in-out"
+							className="flex flex-col md:flex-row justify-between gap-5"
 						>
 							<section>
 								<h2 className="text-2xl font-medium py-2">{task.title}</h2>
