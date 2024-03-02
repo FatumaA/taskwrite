@@ -1,14 +1,17 @@
-import { useState, useEffect, MouseEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { readDocuments } from "../db/db";
 import { ITask } from "../models/interface";
 import TaskItem from "./TaskItem";
 import Button from "./Button";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import Dialog from "./Dialog";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
+	const [searchedTasks, setSearchedTasks] = useState<ITask[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
+	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
 	const getTasks = async () => {
@@ -16,6 +19,20 @@ const Task = () => {
 		console.log("ALL TASKS", documents);
 
 		return documents as ITask[];
+	};
+
+	const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		if (!searchTerm) return setError("No search term entered");
+
+		const filteredTasks = tasks.filter(
+			(task) =>
+				task.title.includes(searchTerm) || task.description.includes(searchTerm)
+		);
+		if (filteredTasks.length === 0) {
+			setError("No task found");
+		}
+		setSearchedTasks(filteredTasks);
 	};
 
 	useEffect(() => {
@@ -35,7 +52,10 @@ const Task = () => {
 					Your Tasks
 				</h1>
 				<div className="m-8 flex justify-between items-center">
-					<form className="flex items-center gap-2 w-1/2">
+					<form
+						className="flex items-center gap-2 w-1/2"
+						onSubmit={handleSubmit}
+					>
 						<input
 							aria-roledescription="search"
 							type="text"
@@ -51,6 +71,9 @@ const Task = () => {
 						>
 							Search
 						</button>
+						<div className="flex">
+							<span className="text-red-500 font-medium">{error}</span>
+						</div>
 					</form>
 					<Button
 						bgColor="bg-pink-700 text-white  font-medium py-2 hover:bg-pink-800"
@@ -63,8 +86,14 @@ const Task = () => {
 						}}
 					/>
 				</div>
-
 				<div className="flex flex-col md:flex-row justify-between">
+					{searchedTasks && (
+						<Dialog isEdit={false} setIsEdit={() => {}}>
+							{searchedTasks.map((task: ITask) => (
+								<TaskItem key={task.$id} task={task} />
+							))}
+						</Dialog>
+					)}
 					<div className="flex-1">
 						<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
 						{tasks.map((task: ITask) => {
