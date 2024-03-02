@@ -24,7 +24,7 @@ This is a task app that uses Appwrite as a backend.
 
 - [x] AI can generate task descriptions based on task title
 
-- [ ] Tasks are searchable
+- [x] Tasks are searchable
 
 - [x] User can add tasks via voice commands
 
