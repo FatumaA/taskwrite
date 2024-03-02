@@ -10,8 +10,8 @@ import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 // if isEdit is true, then the form will be populated with the task's data
 interface ITaskFormProps {
 	task: ITask | null;
-	isEdit: boolean;
-	setIsEdit: (isEdit: boolean) => void;
+	isEdit?: boolean;
+	setIsEdit?: (isEdit: boolean) => void;
 }
 
 const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
@@ -142,7 +142,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 					id="priority"
 					value={priority}
 					onChange={(e) => setPriority(e.target.value)}
-					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900"
 				>
 					<option value="low">Low</option>
 					<option value="medium">Medium</option>
