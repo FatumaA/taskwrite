@@ -1,15 +1,13 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import React from "react";
-import { ITask } from "../models/interface";
-import AddTask from "./AddTask";
+import { ReactNode } from "react";
 
 interface DialogProps {
 	isEdit: boolean;
 	setIsEdit: (isEdit: boolean) => void;
-	task: ITask;
+	children: ReactNode;
 }
 
-function Dialog({ setIsEdit, isEdit, task }: DialogProps) {
+function Dialog({ setIsEdit, isEdit, children }: DialogProps) {
 	const closeModal = () => {
 		setIsEdit(!isEdit);
 	};
@@ -27,12 +25,7 @@ function Dialog({ setIsEdit, isEdit, task }: DialogProps) {
 				<span>Close </span>
 				<XMarkIcon height={25} />
 			</button>
-			<AddTask
-				key={task!.$id}
-				task={task!}
-				isEdit={true}
-				setIsEdit={setIsEdit}
-			/>
+			{children}
 		</dialog>
 	);
 }
