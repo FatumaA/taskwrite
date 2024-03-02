@@ -4,6 +4,7 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { IPayload, ITask } from "../models/interface";
 import { deleteDocument, updateDocument } from "../db/db";
 import Dialog from "./Dialog";
+import AddTask from "./AddTask";
 
 interface TaskItemProps {
 	task: ITask;
@@ -47,7 +48,9 @@ function TaskItem({ task }: TaskItemProps) {
 	return (
 		<>
 			{isEdit && (
-				<Dialog setIsEdit={setIsEdit} isEdit={isEdit} task={selectedTask!} />
+				<Dialog setIsEdit={setIsEdit} isEdit>
+					<AddTask task={selectedTask!} isEdit={true} setIsEdit={setIsEdit} />
+				</Dialog>
 			)}
 			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out h-full max-h-80 md:max-h-[380px] lg:max-h-72">
 				{task.priority && (
