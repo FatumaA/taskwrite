@@ -114,13 +114,16 @@ function TaskItem({ task }: TaskItemProps) {
 					</section>
 					<section className="flex flex-row md:flex-col justify-between">
 						<div className="flex gap-2 py-1">
-							<Button
-								bgColor="bg-green-400"
-								text="Edit"
-								icon={PencilSquareIcon}
-								iconClasses="hidden md:flex"
-								handleClick={() => handleEdit(task)}
-							/>
+							{!task.done && (
+								<Button
+									bgColor="bg-green-400"
+									text="Edit"
+									icon={PencilSquareIcon}
+									iconClasses="hidden md:flex"
+									handleClick={() => handleEdit(task)}
+								/>
+							)}
+
 							<Button
 								bgColor="bg-red-400"
 								text="Delete"
