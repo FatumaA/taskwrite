@@ -124,8 +124,6 @@ function TaskItem({ task }: TaskItemProps) {
 								/>
 							</div>
 						)}
-						{isDone}
-						{task.done}
 					</section>
 				</section>
 			</div>
