@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 interface DialogProps {
 	isEdit: boolean;
@@ -8,12 +8,15 @@ interface DialogProps {
 }
 
 function Dialog({ setIsEdit, isEdit, children }: DialogProps) {
+	const [isOpen, setIsOpen] = useState(true);
+
 	const closeModal = () => {
 		setIsEdit(!isEdit);
+		setIsOpen(false);
 	};
 	return (
 		<dialog
-			open={true}
+			open={isOpen}
 			id="modal"
 			className="p-8 fixed inset-0 backdrop-filter backdrop-blur-md backdrop-brightness-50 w-4/6 border border-gray-400 rounded-md"
 		>
