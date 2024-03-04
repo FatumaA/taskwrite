@@ -6,6 +6,7 @@ import { ChangeEventHandler, useEffect, useState } from "react";
 import Speaker from "../components/Speaker";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 import Select from "./Select";
+import { useNavigate } from "react-router-dom";
 
 // pass a task and an isEdit boolean
 // if isEdit is true, then the form will be populated with the task's data
@@ -16,6 +17,7 @@ interface ITaskFormProps {
 }
 
 const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
+	const navigate = useNavigate();
 	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
 	const [titleVal, setTitleVal] = useState("");
@@ -80,6 +82,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 		setDueDate(new Date());
 		setPriority(priorityArray[0]);
 		setValidationError("");
+		navigate("/tasks");
 	};
 
 	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
