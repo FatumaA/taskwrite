@@ -29,7 +29,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 	const priorityArray = ["low", "medium", "high"];
 
 	const [priority, setPriority] = useState(
-		isEdit ? task?.priority : priorityArray[0]
+		isEdit && task?.priority ? task?.priority : priorityArray[0]
 	);
 
 	const [isValidationError, setValidationError] = useState("");
@@ -148,7 +148,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 					Task Priority
 				</label>
 				<Select
-					defaultSelectValue={priorityArray[0]}
+					defaultSelectValue={priority}
 					selectOptions={priorityArray}
 					handleSelectChange={(e) => setPriority(e.target.value)}
 				/>
