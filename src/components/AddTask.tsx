@@ -63,7 +63,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 
 		if (isEdit && task) {
 			await updateDocument(payload, task!.$id);
-			setIsEdit(false);
+			setIsEdit!(false);
 		} else {
 			await createDocument(payload);
 		}
