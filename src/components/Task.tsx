@@ -9,7 +9,6 @@ import Search from "./Search";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
-	// const [searchedTasks, setSearchedTasks] = useState<ITask[]>([]);
 
 	const navigate = useNavigate();
 
@@ -52,13 +51,6 @@ const Task = () => {
 					/>
 				</div>
 				<div className="flex flex-col md:flex-row justify-between">
-					{/* {searchedTasks.length > 0 && (
-						<Dialog setSearchedTasks={setSearchedTasks}>
-							{searchedTasks.map((task: ITask) => (
-								<TaskItem key={task.$id} task={task} />
-							))}
-						</Dialog>
-					)} */}
 					<div className="flex-1">
 						<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
 						{tasks.map((task: ITask) => {
