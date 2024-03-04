@@ -109,7 +109,9 @@ function TaskItem({ task }: TaskItemProps) {
 							/>
 						</div>
 						{task.done ? (
-							<span className="text-green-600 font-bold">Completed</span>
+							<span className="items-center text-green-600 font-bold">
+								Completed
+							</span>
 						) : (
 							<div className="flex items-center">
 								<label htmlFor="done" className="mr-2 font-light">
