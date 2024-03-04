@@ -2,7 +2,7 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import { createDocument, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
 import { callAI } from "../utils/ai";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Speaker from "../components/Speaker";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 import Select from "./Select";

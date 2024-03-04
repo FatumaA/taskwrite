@@ -3,7 +3,7 @@ import { useState } from "react";
 interface SelectProps {
 	defaultSelectValue: string;
 	selectOptions: string[];
-	handleSelectChange: (e: React.ChangeEventHandler<HTMLSelectElement>) => void;
+	handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Select = ({

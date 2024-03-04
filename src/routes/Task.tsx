@@ -20,9 +20,7 @@ const Task = () => {
 		return documents as ITask[];
 	};
 
-	const handleSelectChange = (
-		e: React.ChangeEventHandler<HTMLSelectElement>
-	) => {
+	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		e.preventDefault();
 
 		const pendingTasks = tasks.filter((task) => !task.done);
