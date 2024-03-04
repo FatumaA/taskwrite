@@ -2,9 +2,10 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import { createDocument, updateDocument } from "../db/db";
 import { IPayload, ITask } from "../models/interface";
 import { callAI } from "../utils/ai";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import Speaker from "../components/Speaker";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
+import Select from "./Select";
 
 // pass a task and an isEdit boolean
 // if isEdit is true, then the form will be populated with the task's data
@@ -22,7 +23,12 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 	const [dueDate, setDueDate] = useState(
 		isEdit && task?.due_date ? new Date(task.due_date) : new Date()
 	);
-	const [priority, setPriority] = useState(isEdit ? task?.priority : "low");
+
+	const priorityArray = ["low", "medium", "high"];
+
+	const [priority, setPriority] = useState(
+		isEdit ? task?.priority : priorityArray[0]
+	);
 
 	const [isValidationError, setValidationError] = useState("");
 
@@ -72,7 +78,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 		setTitleVal("");
 		setTextAreaVal("");
 		setDueDate(new Date());
-		setPriority("low");
+		setPriority(priorityArray[0]);
 		setValidationError("");
 	};
 
@@ -138,16 +144,11 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 				<label htmlFor="description" className="mb-1">
 					Task Priority
 				</label>
-				<select
-					id="priority"
-					value={priority}
-					onChange={(e) => setPriority(e.target.value)}
-					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900"
-				>
-					<option value="low">Low</option>
-					<option value="medium">Medium</option>
-					<option value="high">High</option>
-				</select>
+				<Select
+					defaultSelectValue={priorityArray[0]}
+					selectOptions={priorityArray}
+					handleSelectChange={(e) => setPriority(e.target.value)}
+				/>
 			</div>
 			<div className="flex flex-col mb-6">
 				<label htmlFor="description" className="mb-1">
