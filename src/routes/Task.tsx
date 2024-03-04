@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { readDocuments } from "../db/db";
 import { ITask } from "../models/interface";
-import TaskItem from "./TaskItem";
-import Button from "./Button";
+import TaskItem from "../components/TaskItem";
+import Button from "../components/Button";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import Search from "./Search";
+import Search from "../components/Search";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
