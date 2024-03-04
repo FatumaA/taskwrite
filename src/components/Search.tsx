@@ -12,7 +12,7 @@ const Search = ({ tasks }: SearchProps) => {
 	const [searchedTasks, setSearchedTasks] = useState<ITask[]>([]);
 	const [error, setError] = useState("");
 
-	const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!searchTerm) {
 			setError("No search term entered");
