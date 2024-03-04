@@ -9,12 +9,17 @@ interface DialogProps {
 	children: ReactNode;
 }
 
-function Dialog({ setIsEdit, isEdit, children }: DialogProps) {
+function Dialog({
+	setIsEdit,
+	isEdit,
+	setSearchedTasks,
+	children,
+}: DialogProps) {
 	const [isOpen, setIsOpen] = useState(true);
 
 	const closeModal = () => {
 		if (setIsEdit) setIsEdit(!isEdit);
-		// if (setSearchedTasks) setSearchedTasks([]);
+		if (setSearchedTasks) setSearchedTasks([]);
 
 		setIsOpen(false);
 	};
