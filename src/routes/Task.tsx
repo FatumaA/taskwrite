@@ -116,15 +116,13 @@ const Task = () => {
 				<div className="flex flex-col md:flex-row justify-between">
 					<div className="flex-1">
 						<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
-						<div className="m-8 flex gap-2 items-center">
-							<p>Sort tasks by: </p>
-							<div className="w-4/6">
-								<Select
-									defaultSelectValue={selectArray[0]}
-									handleSelectChange={handleSelectChange}
-									selectOptions={selectArray}
-								/>
-							</div>
+						<div className="m-8 flex gap-2 items-center justify-between">
+							<span className="font-medium">Sort tasks by: </span>
+							<Select
+								defaultSelectValue={selectArray[0]}
+								handleSelectChange={handleSelectChange}
+								selectOptions={selectArray}
+							/>
 						</div>
 						{tasks.map((task: ITask) => {
 							if (!task.done) {
