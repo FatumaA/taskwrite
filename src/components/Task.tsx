@@ -36,9 +36,7 @@ const Task = () => {
 					Your Tasks
 				</h1>
 				<div className="m-8 flex justify-between items-center">
-					<div className="flex flex-col">
-						<Search tasks={tasks} />
-					</div>
+					<Search tasks={tasks} />
 					<Button
 						bgColor="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800"
 						text="Add Task"
