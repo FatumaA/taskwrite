@@ -23,7 +23,13 @@ const Task = () => {
 
 	const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		if (!searchTerm) return setError("No search term entered");
+		if (!searchTerm) {
+			setError("No search term entered");
+			setTimeout(() => {
+				setError("");
+			}, 3000);
+			return;
+		}
 
 		const filteredTasks = tasks.filter(
 			(task) =>
@@ -31,6 +37,10 @@ const Task = () => {
 		);
 		if (filteredTasks.length === 0) {
 			setError("No task found");
+			setTimeout(() => {
+				setError("");
+			}, 3000);
+			return;
 		}
 		setSearchedTasks(filteredTasks);
 	};
@@ -52,8 +62,11 @@ const Task = () => {
 					Your Tasks
 				</h1>
 				<div className="m-8 flex justify-between items-center">
-					<div className="flex flex-col w-1/2">
-						<form className="flex items-center gap-2" onSubmit={handleSubmit}>
+					<div className="flex flex-col">
+						<form
+							className="flex items-center gap-2 w-1/2"
+							onSubmit={handleSubmit}
+						>
 							<input
 								aria-roledescription="search"
 								type="text"
@@ -78,7 +91,7 @@ const Task = () => {
 					</div>
 
 					<Button
-						bgColor="bg-pink-700 text-white  font-medium py-2 hover:bg-pink-800"
+						bgColor="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800"
 						text="Add Task"
 						icon={PlusIcon}
 						iconClasses="hidden md:flex "
