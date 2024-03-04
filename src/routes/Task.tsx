@@ -89,7 +89,7 @@ const Task = () => {
 	useEffect(() => {
 		getTasks()
 			.then((res) => {
-				setTasks(res);
+				setTasks(res.reverse());
 			})
 			.catch((err) => {
 				console.error(err);
