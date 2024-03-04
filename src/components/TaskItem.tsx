@@ -108,7 +108,9 @@ function TaskItem({ task }: TaskItemProps) {
 								handleClick={() => handleDelete(task.$id)}
 							/>
 						</div>
-						{!task.done && (
+						{task.done ? (
+							<span className="text-green-600 font-bold">Completed</span>
+						) : (
 							<div className="flex items-center">
 								<label htmlFor="done" className="mr-2 font-light">
 									Mark as complete
