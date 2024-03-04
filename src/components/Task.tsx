@@ -52,29 +52,27 @@ const Task = () => {
 					Your Tasks
 				</h1>
 				<div className="m-8 flex justify-between items-center">
-					<form
-						className="flex items-center gap-2 w-1/2"
-						onSubmit={handleSubmit}
-					>
-						<input
-							aria-roledescription="search"
-							type="text"
-							id="search"
-							placeholder="search your tasks..."
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-							className=" w-5/6 border rounded-md border-slate-800 p-2 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
-						/>
-						<button
-							className="rounded-md px-2 py-2 hover:scale-105 transition duration-300 ease-in-out bg-pink-700 text-white hover:bg-pink-800 font-medium"
-							type="submit"
-						>
-							Search
-						</button>
-						<div className="flex">
-							<span className="text-red-500 font-medium">{error}</span>
-						</div>
-					</form>
+					<div className="flex flex-col w-1/2">
+						<form className="flex items-center gap-2" onSubmit={handleSubmit}>
+							<input
+								aria-roledescription="search"
+								type="text"
+								id="search"
+								placeholder="search your tasks..."
+								value={searchTerm}
+								onChange={(e) => setSearchTerm(e.target.value)}
+								className=" w-5/6 border rounded-md border-slate-800 p-2 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+							/>
+							<button
+								className="rounded-md px-2 py-2 hover:scale-105 transition duration-300 ease-in-out bg-pink-700 text-white hover:bg-pink-800 font-medium"
+								type="submit"
+							>
+								Search
+							</button>
+						</form>
+						<span className="text-red-500 font-medium mt-1">{error}</span>
+					</div>
+
 					<Button
 						bgColor="bg-pink-700 text-white  font-medium py-2 hover:bg-pink-800"
 						text="Add Task"
@@ -87,8 +85,8 @@ const Task = () => {
 					/>
 				</div>
 				<div className="flex flex-col md:flex-row justify-between">
-					{searchedTasks && (
-						<Dialog isEdit={false} setIsEdit={() => {}}>
+					{searchedTasks.length > 0 && (
+						<Dialog setSearchedTasks={setSearchedTasks}>
 							{searchedTasks.map((task: ITask) => (
 								<TaskItem key={task.$id} task={task} />
 							))}
