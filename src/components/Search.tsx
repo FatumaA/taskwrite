@@ -37,8 +37,8 @@ const Search = ({ tasks }: SearchProps) => {
 		setSearchedTasks(filteredTasks);
 	};
 	return (
-		<>
-			<form className="flex items-center gap-2 w-1/2" onSubmit={handleSubmit}>
+		<div className="flex flex-col w-1/2">
+			<form className="flex items-center gap-2" onSubmit={handleSubmit}>
 				{searchedTasks.length > 0 && (
 					<Dialog setSearchedTasks={setSearchedTasks}>
 						{searchedTasks.map((task: ITask) => (
@@ -53,7 +53,7 @@ const Search = ({ tasks }: SearchProps) => {
 					placeholder="search your tasks..."
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
-					className={`border rounded-md p-2 focus:outline-none focus:ring-1 ${
+					className={`w-5/6 border rounded-md p-2 focus:outline-none focus:ring-1 ${
 						error
 							? "border-red-600 focus:ring-red-500 invalid:focus:ring-red-600"
 							: "border-slate-800 focus:ring-slate-900"
@@ -67,7 +67,7 @@ const Search = ({ tasks }: SearchProps) => {
 				</button>
 			</form>
 			<span className="text-red-500 font-medium mt-1">{error}</span>
-		</>
+		</div>
 	);
 };
 
