@@ -61,7 +61,11 @@ const Task = () => {
 								placeholder="search your tasks..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className=" w-5/6 border rounded-md border-slate-800 p-2 resize-none focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+								className={`border rounded-md p-2 focus:outline-none focus:ring-1 ${
+									error
+										? "border-red-600 focus:ring-red-500 invalid:focus:ring-red-600"
+										: "border-slate-800 focus:ring-slate-900"
+								}`}
 							/>
 							<button
 								className="rounded-md px-2 py-2 hover:scale-105 transition duration-300 ease-in-out bg-pink-700 text-white hover:bg-pink-800 font-medium"
