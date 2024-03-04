@@ -161,6 +161,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 					type="date"
 					id="date"
 					value={dueDate!.toISOString().split("T")[0]}
+					min={new Date().toISOString().split("T")[0]}
 					onChange={(e) => setDueDate(new Date(e.target.value))}
 					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
