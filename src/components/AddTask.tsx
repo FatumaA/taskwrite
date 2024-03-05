@@ -7,6 +7,7 @@ import Speaker from "../components/Speaker";
 import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 import Select from "./Select";
 import { useNavigate } from "react-router-dom";
+import { getTasks } from "../utils/shared";
 
 // pass a task and an isEdit boolean
 // if isEdit is true, then the form will be populated with the task's data
@@ -14,9 +15,10 @@ interface ITaskFormProps {
 	task: ITask | null;
 	isEdit?: boolean;
 	setIsEdit?: (isEdit: boolean) => void;
+	setTasks: (tasks: ITask[]) => void;
 }
 
-const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
+const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 	const navigate = useNavigate();
 	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
@@ -85,6 +87,8 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 		if (isEdit && task) {
 			await updateDocument(payload, task!.$id);
 			setIsEdit!(false);
+			const allTaks = await getTasks();
+			return setTasks(allTaks.reverse());
 		} else {
 			await createDocument(payload);
 		}

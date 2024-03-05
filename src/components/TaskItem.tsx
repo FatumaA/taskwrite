@@ -17,7 +17,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 	const [selectedTask, setSelectedTask] = useState<ITask>();
 	const [isDone, setIsDone] = useState(false);
 
-	const handleEdit = (
+	const handleEdit = async (
 		e: React.MouseEvent<HTMLButtonElement>,
 		currentTask: ITask
 	) => {
@@ -32,11 +32,9 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 		currentTaskId: string
 	) => {
 		e.preventDefault();
-		console.log("Delete", currentTaskId);
-		const res = await deleteDocument(currentTaskId);
-		console.log("DELETE RES", res);
+		await deleteDocument(currentTaskId);
 		const allTaks = await getTasks();
-		return setTasks(allTaks);
+		return setTasks(allTaks.reverse());
 	};
 
 	const handleCheckbox = async (
@@ -56,14 +54,19 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 
 		await updateDocument(payload, id);
 		const allTaks = await getTasks();
-		return setTasks(allTaks);
+		return setTasks(allTaks.reverse());
 	};
 
 	return (
 		<>
 			{isEdit && (
 				<Dialog setIsEdit={setIsEdit} isEdit>
-					<AddTask task={selectedTask!} isEdit={true} setIsEdit={setIsEdit} />
+					<AddTask
+						task={selectedTask!}
+						isEdit={true}
+						setIsEdit={setIsEdit}
+						setTasks={setTasks}
+					/>
 				</Dialog>
 			)}
 			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96">
