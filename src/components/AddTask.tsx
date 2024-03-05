@@ -118,8 +118,15 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 
 		try {
 			const res = await callAI(prompt);
+			const responseText = await res.text();
+
 			setIsGenerating(false);
-			return setTextAreaVal(await res.text());
+
+			responseText.split("").forEach((char, index) => {
+				setTimeout(() => {
+					setTextAreaVal((prevText) => prevText + char);
+				}, index * 32);
+			});
 		} catch (error) {
 			console.log("ERROR HUGGING FACE API: " + error);
 		}
