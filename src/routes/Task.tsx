@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Search from "../components/Search";
 import Select from "../components/Select";
 import { getTasks } from "../utils/shared";
+import Navbar from "../components/Navbar";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
@@ -88,61 +89,72 @@ const Task = () => {
 	}, []);
 
 	return (
-		<main className="container mx-auto">
-			<section className="max-w-7xl mx-auto m-12 p-2 md:p-8">
-				<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
-					Your Tasks
-				</h1>
-				<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
-					<Search tasks={tasks} />
-					<Button
-						extraBtnClasses="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800 ml-auto"
-						text="Add Task"
-						icon={PlusIcon}
-						iconClasses="hidden md:flex "
-						handleClick={(e) => {
-							e.preventDefault();
-							navigate("/");
-						}}
-					/>
-				</div>
+		<>
+			<Navbar />
+			<main className="container mx-auto">
+				<section className="max-w-7xl mx-auto m-12 p-2 md:p-8">
+					<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
+						Your Tasks
+					</h1>
+					<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
+						<Search tasks={tasks} />
+						<Button
+							extraBtnClasses="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800 ml-auto"
+							text="Add Task"
+							icon={PlusIcon}
+							iconClasses="hidden md:flex "
+							handleClick={(e) => {
+								e.preventDefault();
+								navigate("/");
+							}}
+						/>
+					</div>
 
-				<div className="flex flex-col md:flex-row justify-between">
-					<div className="flex-1">
-						<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
-						<div className="m-8 flex items-start lg:items-center gap-1 justify-between flex-col lg:flex-row">
-							<span className="font-medium">Sort Tasks by: </span>
-							<Select
-								defaultSelectValue={selectArray[0]}
-								handleSelectChange={handleSelectChange}
-								selectOptions={selectArray}
-							/>
+					<div className="flex flex-col md:flex-row justify-between">
+						<div className="flex-1">
+							<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
+							<div className="m-8 flex items-start lg:items-center gap-1 justify-between flex-col lg:flex-row">
+								<span className="font-medium">Sort Tasks by: </span>
+								<Select
+									defaultSelectValue={selectArray[0]}
+									handleSelectChange={handleSelectChange}
+									selectOptions={selectArray}
+								/>
+							</div>
+							<div>
+								{tasks.map((task: ITask) => {
+									if (!task.done) {
+										return (
+											<TaskItem
+												key={task.$id}
+												task={task}
+												setTasks={setTasks}
+											/>
+										);
+									}
+								})}
+							</div>
 						</div>
-						<div>
-							{tasks.map((task: ITask) => {
-								if (!task.done) {
-									return (
-										<TaskItem key={task.$id} task={task} setTasks={setTasks} />
-									);
-								}
-							})}
+						<div className="flex-1">
+							<h3 className="text-2xl font-bold m-8">Completed Tasks</h3>
+							<div>
+								{tasks.map((task: ITask) => {
+									if (task.done === true) {
+										return (
+											<TaskItem
+												key={task.$id}
+												task={task}
+												setTasks={setTasks}
+											/>
+										);
+									}
+								})}
+							</div>
 						</div>
 					</div>
-					<div className="flex-1">
-						<h3 className="text-2xl font-bold m-8">Completed Tasks</h3>
-						<div>
-							{tasks.map((task: ITask) => {
-								if (task.done === true) {
-									return (
-										<TaskItem key={task.$id} task={task} setTasks={setTasks} />
-									);
-								}
-							})}
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
+				</section>
+			</main>
+		</>
 	);
 };
 
