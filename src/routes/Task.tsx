@@ -92,8 +92,8 @@ const Task = () => {
 		<>
 			<Navbar />
 			<main className="container mx-auto">
-				<section className="max-w-7xl mx-auto m-12 p-2 md:p-8">
-					<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
+				<section className="max-w-5xl mx-auto m-12 p-16">
+					<h1 className="text-4xl md:text-7xl font-bold text-center py-3 mb-16">
 						Your Tasks
 					</h1>
 					<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
