@@ -22,7 +22,6 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 		currentTask: ITask
 	) => {
 		e.preventDefault();
-		console.log("Edit", currentTask);
 		setIsEdit(true);
 		setSelectedTask(currentTask);
 	};
