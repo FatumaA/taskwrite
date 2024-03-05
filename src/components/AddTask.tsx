@@ -15,7 +15,7 @@ interface ITaskFormProps {
 	task: ITask | null;
 	isEdit?: boolean;
 	setIsEdit?: (isEdit: boolean) => void;
-	setTasks: (tasks: ITask[]) => void;
+	setTasks?: (tasks: ITask[]) => void;
 }
 
 const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
@@ -92,7 +92,7 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 			await updateDocument(payload, task!.$id);
 			setIsEdit!(false);
 			const allTaks = await getTasks();
-			return setTasks(allTaks.reverse());
+			if (setTasks) return setTasks(allTaks.reverse());
 		} else {
 			await createDocument(payload);
 		}
