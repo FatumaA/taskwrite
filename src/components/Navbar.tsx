@@ -13,7 +13,7 @@ const Navbar = () => {
 
 	const themeArray = ["light", "dark", "system"];
 	return (
-		<nav className="py-4 border border-b-2 shadow-md w-full fixed top-0">
+		<nav className="py-4 border border-b-2 shadow-md w-full fixed top-0 bg-white">
 			<ul className="flex items-center justify-between  w-11/12 mx-auto">
 				<Link to="/">
 					<Button
@@ -31,7 +31,7 @@ const Navbar = () => {
 						to="/tasks"
 						className="font-semibold hover:scale-105 transition duration-300 ease-in-out"
 					>
-						My Tasks
+						View Tasks
 					</Link>
 					<div className="flex gap-2 items-center">
 						<span className="font-semibold"> Theme: </span>
