@@ -47,7 +47,7 @@ const AddTask = ({ task, isEdit, setIsEdit }: ITaskFormProps) => {
 		setTitleVal(e.target.value);
 
 		if (e.target.value.trim() !== "") {
-			setValidationError("");
+			setTitleValidationError("");
 		}
 	};
 
