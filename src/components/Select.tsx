@@ -19,7 +19,7 @@ const Select = ({
 				setSelectVal(e.target.value);
 				handleSelectChange(e);
 			}}
-			className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900"
+			className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 cursor-pointer"
 		>
 			{selectOptions.map((option) => (
 				<option key={option} value={option}>
