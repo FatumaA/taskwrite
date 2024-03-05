@@ -5,13 +5,14 @@ import { IPayload, ITask } from "../models/interface";
 import { deleteDocument, updateDocument } from "../db/db";
 import Dialog from "./Dialog";
 import AddTask from "./AddTask";
+import { getTasks } from "../utils/shared";
 
 interface TaskItemProps {
 	task: ITask;
-	getTasks: () => void;
+	setTasks: (tasks: ITask[]) => void;
 }
 
-function TaskItem({ task, getTasks }: TaskItemProps) {
+function TaskItem({ task, setTasks }: TaskItemProps) {
 	const [isEdit, setIsEdit] = useState(false);
 	const [selectedTask, setSelectedTask] = useState<ITask>();
 	const [isDone, setIsDone] = useState(false);
@@ -34,7 +35,8 @@ function TaskItem({ task, getTasks }: TaskItemProps) {
 		console.log("Delete", currentTaskId);
 		const res = await deleteDocument(currentTaskId);
 		console.log("DELETE RES", res);
-		await getTasks();
+		const allTaks = await getTasks();
+		return setTasks(allTaks);
 	};
 
 	const handleCheckbox = async (
@@ -53,7 +55,8 @@ function TaskItem({ task, getTasks }: TaskItemProps) {
 		};
 
 		await updateDocument(payload, id);
-		await getTasks();
+		const allTaks = await getTasks();
+		return setTasks(allTaks);
 	};
 
 	return (

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { readDocuments } from "../db/db";
 import { ITask } from "../models/interface";
 import TaskItem from "../components/TaskItem";
 import Button from "../components/Button";
@@ -7,19 +6,12 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import Search from "../components/Search";
 import Select from "../components/Select";
+import { getTasks } from "../utils/shared";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
 
 	const navigate = useNavigate();
-
-	const getTasks = async () => {
-		const { documents } = await readDocuments();
-		console.log("ALL TASKS", documents);
-
-		setTasks((documents as ITask[]).reverse());
-		return documents as ITask[];
-	};
 
 	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		e.preventDefault();
@@ -130,7 +122,7 @@ const Task = () => {
 							{tasks.map((task: ITask) => {
 								if (!task.done) {
 									return (
-										<TaskItem key={task.$id} task={task} getTasks={getTasks} />
+										<TaskItem key={task.$id} task={task} setTasks={setTasks} />
 									);
 								}
 							})}
@@ -142,7 +134,7 @@ const Task = () => {
 							{tasks.map((task: ITask) => {
 								if (task.done === true) {
 									return (
-										<TaskItem key={task.$id} task={task} getTasks={getTasks} />
+										<TaskItem key={task.$id} task={task} setTasks={setTasks} />
 									);
 								}
 							})}
