@@ -15,13 +15,21 @@ function TaskItem({ task }: TaskItemProps) {
 	const [selectedTask, setSelectedTask] = useState<ITask>();
 	const [isDone, setIsDone] = useState(false);
 
-	const handleEdit = (currentTask: ITask) => {
+	const handleEdit = (
+		e: React.MouseEvent<HTMLButtonElement>,
+		currentTask: ITask
+	) => {
+		e.preventDefault();
 		console.log("Edit", currentTask);
 		setIsEdit(true);
 		setSelectedTask(currentTask);
 	};
 
-	const handleDelete = async (currentTaskId: string) => {
+	const handleDelete = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		currentTaskId: string
+	) => {
+		e.preventDefault();
 		console.log("Delete", currentTaskId);
 		const res = await deleteDocument(currentTaskId);
 		console.log("DELETE RES", res);
@@ -52,27 +60,48 @@ function TaskItem({ task }: TaskItemProps) {
 					<AddTask task={selectedTask!} isEdit={true} setIsEdit={setIsEdit} />
 				</Dialog>
 			)}
-			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out h-full max-h-80 md:max-h-[380px] lg:max-h-72">
-				{task.priority && (
-					<span className="">
-						<span className="font-medium">Task priority: </span>
-						<span
-							className={`${
-								task.priority === "low"
-									? "bg-yellow-400"
-									: task.priority === "medium"
-									? "bg-orange-400"
-									: "bg-red-400"
-							} py-1 px-2 rounded-md`}
-						>
-							{task.priority}
-						</span>
-					</span>
-				)}
+			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out h-full">
 				<section
 					key={task.$id}
-					className="flex flex-col md:flex-row justify-between gap-2 my-4"
+					className="flex flex-col justify-between gap-2 my-4"
 				>
+					<section className="flex gap-4 items-center justify-betwee flex-wrap">
+						{task.priority && (
+							<span>
+								<span className="font-medium">Priority: </span>
+								<span
+									className={`${
+										task.priority === "low"
+											? "bg-yellow-400"
+											: task.priority === "medium"
+											? "bg-orange-400"
+											: "bg-red-400"
+									} py-1 px-2 rounded-md`}
+								>
+									{task.priority}
+								</span>
+							</span>
+						)}
+						<div className="flex gap-2 py-1 ml-auto md:ml-0">
+							{!task.done && (
+								<Button
+									extraBtnClasses="bg-green-400"
+									text="Edit"
+									icon={PencilSquareIcon}
+									iconClasses="hidden lg:flex"
+									handleClick={(e) => handleEdit(e, task)}
+								/>
+							)}
+
+							<Button
+								extraBtnClasses="bg-red-400"
+								text="Delete"
+								icon={TrashIcon}
+								iconClasses="hidden lg:flex"
+								handleClick={(e) => handleDelete(e, task.$id)}
+							/>
+						</div>
+					</section>
 					<section>
 						<h2 className="text-xl font-medium py-2">{task.title}</h2>
 						<p className="py-1 flex">
@@ -88,32 +117,13 @@ function TaskItem({ task }: TaskItemProps) {
 							).toLocaleDateString()}`}</span>
 						</span>
 					</section>
-					<section className="flex flex-row md:flex-col justify-between">
-						<div className="flex gap-2 py-1">
-							{!task.done && (
-								<Button
-									bgColor="bg-green-400"
-									text="Edit"
-									icon={PencilSquareIcon}
-									iconClasses="hidden md:flex"
-									handleClick={() => handleEdit(task)}
-								/>
-							)}
-
-							<Button
-								bgColor="bg-red-400"
-								text="Delete"
-								icon={TrashIcon}
-								iconClasses="hidden md:flex"
-								handleClick={() => handleDelete(task.$id)}
-							/>
-						</div>
+					<section className="flex flex-col justify-between">
 						{task.done ? (
-							<span className="items-center text-green-600 font-bold">
+							<span className="items-center text-green-600 font-bol ml-auto">
 								Completed
 							</span>
 						) : (
-							<div className="flex items-center">
+							<div className="flex items-center ml-auto">
 								<label htmlFor="done" className="mr-2 font-light">
 									Mark as complete
 								</label>
