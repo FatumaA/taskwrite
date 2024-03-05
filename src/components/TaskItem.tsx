@@ -60,7 +60,7 @@ function TaskItem({ task }: TaskItemProps) {
 					<AddTask task={selectedTask!} isEdit={true} setIsEdit={setIsEdit} />
 				</Dialog>
 			)}
-			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out  max-h-96">
+			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96">
 				<section
 					key={task.$id}
 					className="flex flex-col justify-between gap-2 my-4 h-full"
