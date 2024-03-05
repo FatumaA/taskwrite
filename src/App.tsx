@@ -14,7 +14,7 @@ function App() {
 				</h1>
 				<div className="flex justify-end m-8">
 					<Button
-						bgColor="flex bg-pink-700 text-white  font-medium py-2 hover:bg-pink-800"
+						extraBtnClasses="flex bg-pink-700 text-white  font-medium py-2 hover:bg-pink-800"
 						text="View Tasks"
 						icon={EyeIcon}
 						iconClasses="hidden md:flex"

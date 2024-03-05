@@ -102,15 +102,16 @@ function TaskItem({ task }: TaskItemProps) {
 							/>
 						</div>
 					</section>
-					<section>
-						<h2 className="text-xl font-medium py-2">{task.title}</h2>
-						<p className="py-1 mb-4 h-16 max-h-28">
+					<section className="">
+						<h2 className="text-xl font-medium py-2 break-words">
+							{task.title}
+						</h2>
+						<p className="py-1 mb-4 min-h-16 break-words">
 							{task.description.length > 70
 								? task.description.substring(0, 70) + "..."
 								: task.description}
 						</p>
-
-						<span className="font-extralight text-gray-600">
+						<span className="font-extralight text-gray-600 mt-2">
 							<span className="font-medium">Due on: </span>
 							<span className="underline">{`${new Date(
 								task.due_date

@@ -37,8 +37,11 @@ const Search = ({ tasks }: SearchProps) => {
 		setSearchedTasks(filteredTasks);
 	};
 	return (
-		<div className="flex flex-col w-1/2">
-			<form className="flex items-center gap-2" onSubmit={handleSubmit}>
+		<div className="flex flex-col w-full md:w-1/2">
+			<form
+				className="flex flex-col md:flex-row items-start md:items-center gap-2"
+				onSubmit={handleSubmit}
+			>
 				{searchedTasks.length > 0 && (
 					<Dialog setSearchedTasks={setSearchedTasks}>
 						{searchedTasks.map((task: ITask) => (

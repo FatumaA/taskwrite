@@ -100,10 +100,10 @@ const Task = () => {
 				<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
 					Your Tasks
 				</h1>
-				<div className="m-8 flex justify-between items-center">
+				<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
 					<Search tasks={tasks} />
 					<Button
-						extraBtnClasses="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800"
+						extraBtnClasses="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800 ml-auto"
 						text="Add Task"
 						icon={PlusIcon}
 						iconClasses="hidden md:flex "
@@ -117,8 +117,8 @@ const Task = () => {
 				<div className="flex flex-col md:flex-row justify-between">
 					<div className="flex-1">
 						<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
-						<div className="m-8 flex gap-2 items-center justify-between">
-							<span className="font-medium">Sort tasks by: </span>
+						<div className="m-8 flex items-start lg:items-center gap-1 justify-between flex-col lg:flex-row">
+							<span className="font-medium">Sort Tasks by: </span>
 							<Select
 								defaultSelectValue={selectArray[0]}
 								handleSelectChange={handleSelectChange}
