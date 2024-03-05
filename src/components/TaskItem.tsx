@@ -132,7 +132,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 								Completed
 							</span>
 						) : (
-							<div className="flex items-center ml-auto">
+							<div className="flex items-center ml-auto hover:scale-105 transition duration-300 ease-in-out">
 								<label htmlFor="done" className="mr-2 font-light">
 									Mark as complete
 								</label>

@@ -22,6 +22,9 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 	const navigate = useNavigate();
 	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isGenerating, setIsGenerating] = useState(false);
+
 	const [titleVal, setTitleVal] = useState("");
 	const [textAreaVal, setTextAreaVal] = useState("");
 	const [dueDate, setDueDate] = useState(
@@ -60,6 +63,7 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 
 	const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setIsSubmitting(true);
 
 		if (!titleVal) {
 			setTitleValidationError("Please provide atleast a title for the task");
@@ -99,18 +103,22 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 		setDueDate(new Date());
 		setPriority(priorityArray[0]);
 		setTitleValidationError("");
+		setIsSubmitting(false);
 		navigate("/tasks");
 	};
 
 	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
+		setTextAreaVal("");
 
 		if (!titleVal) return alert("Please provide a title for the task");
+		setIsGenerating(true);
 
 		const prompt = `Provide a description for this task: ${titleVal}. Keep the description to a maximum of 30 words`;
 
 		try {
 			const res = await callAI(prompt);
+			setIsGenerating(false);
 			return setTextAreaVal(await res.text());
 		} catch (error) {
 			console.log("ERROR HUGGING FACE API: " + error);
@@ -148,7 +156,7 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 					id="description"
 					placeholder="Describe your task"
 					maxLength={200}
-					value={textAreaVal}
+					value={isGenerating ? "generating..." : textAreaVal}
 					onChange={(e) => setTextAreaVal(e.target.value)}
 					className={`border rounded-sm p-2 h-32 resize-none focus:outline-none focus:ring-1 ${
 						textAreaVal.length > 197
@@ -193,6 +201,7 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 				/>
 			</div>
 			<button
+				disabled={isSubmitting}
 				type="submit"
 				className="bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
 			>
