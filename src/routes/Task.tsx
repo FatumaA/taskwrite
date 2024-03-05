@@ -96,7 +96,7 @@ const Task = () => {
 
 	return (
 		<main className="container mx-auto">
-			<section className="max-w-7xl mx-auto m-12 p-2 md:p-8 border border-red-400">
+			<section className="max-w-7xl mx-auto m-12 p-2 md:p-8">
 				<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
 					Your Tasks
 				</h1>
@@ -113,6 +113,7 @@ const Task = () => {
 						}}
 					/>
 				</div>
+
 				<div className="flex flex-col md:flex-row justify-between">
 					<div className="flex-1">
 						<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>

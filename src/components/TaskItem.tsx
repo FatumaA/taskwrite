@@ -60,12 +60,12 @@ function TaskItem({ task }: TaskItemProps) {
 					<AddTask task={selectedTask!} isEdit={true} setIsEdit={setIsEdit} />
 				</Dialog>
 			)}
-			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out h-full">
+			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out  max-h-96">
 				<section
 					key={task.$id}
-					className="flex flex-col justify-between gap-2 my-4"
+					className="flex flex-col justify-between gap-2 my-4 h-full"
 				>
-					<section className="flex gap-4 items-center justify-betwee flex-wrap">
+					<section className="flex gap-4 items-center justify-between flex-wrap">
 						{task.priority && (
 							<span>
 								<span className="font-medium">Priority: </span>
@@ -82,7 +82,7 @@ function TaskItem({ task }: TaskItemProps) {
 								</span>
 							</span>
 						)}
-						<div className="flex gap-2 py-1 ml-auto md:ml-0">
+						<div className="flex gap-2 py-1 ml-auto">
 							{!task.done && (
 								<Button
 									extraBtnClasses="bg-green-400"
@@ -104,20 +104,20 @@ function TaskItem({ task }: TaskItemProps) {
 					</section>
 					<section>
 						<h2 className="text-xl font-medium py-2">{task.title}</h2>
-						<p className="py-1 flex">
+						<p className="py-1 mb-4 h-16 max-h-28">
 							{task.description.length > 70
 								? task.description.substring(0, 70) + "..."
 								: task.description}
 						</p>
 
-						<span className="font-extralight text-gray-600 flex flex-end">
+						<span className="font-extralight text-gray-600">
 							<span className="font-medium">Due on: </span>
 							<span className="underline">{`${new Date(
 								task.due_date
 							).toLocaleDateString()}`}</span>
 						</span>
 					</section>
-					<section className="flex flex-col justify-between">
+					<section className="flex justify-between">
 						{task.done ? (
 							<span className="items-center text-green-600 font-bol ml-auto">
 								Completed
