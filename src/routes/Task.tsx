@@ -96,14 +96,14 @@ const Task = () => {
 
 	return (
 		<main className="container mx-auto">
-			<section className="max-w-7xl mx-auto m-12 p-0 md:p-16">
+			<section className="max-w-7xl mx-auto m-12 p-2 md:p-8 border border-red-400">
 				<h1 className="text-3xl md:text-6xl font-bold text-center py-3">
 					Your Tasks
 				</h1>
 				<div className="m-8 flex justify-between items-center">
 					<Search tasks={tasks} />
 					<Button
-						bgColor="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800"
+						extraBtnClasses="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800"
 						text="Add Task"
 						icon={PlusIcon}
 						iconClasses="hidden md:flex "
@@ -124,19 +124,23 @@ const Task = () => {
 								selectOptions={selectArray}
 							/>
 						</div>
-						{tasks.map((task: ITask) => {
-							if (!task.done) {
-								return <TaskItem key={task.$id} task={task} />;
-							}
-						})}
+						<div>
+							{tasks.map((task: ITask) => {
+								if (!task.done) {
+									return <TaskItem key={task.$id} task={task} />;
+								}
+							})}
+						</div>
 					</div>
 					<div className="flex-1">
 						<h3 className="text-2xl font-bold m-8">Completed Tasks</h3>
-						{tasks.map((task: ITask) => {
-							if (task.done === true) {
-								return <TaskItem key={task.$id} task={task} />;
-							}
-						})}
+						<div>
+							{tasks.map((task: ITask) => {
+								if (task.done === true) {
+									return <TaskItem key={task.$id} task={task} />;
+								}
+							})}
+						</div>
 					</div>
 				</div>
 			</section>
