@@ -17,6 +17,7 @@ const Task = () => {
 		const { documents } = await readDocuments();
 		console.log("ALL TASKS", documents);
 
+		setTasks((documents as ITask[]).reverse());
 		return documents as ITask[];
 	};
 
@@ -128,7 +129,9 @@ const Task = () => {
 						<div>
 							{tasks.map((task: ITask) => {
 								if (!task.done) {
-									return <TaskItem key={task.$id} task={task} />;
+									return (
+										<TaskItem key={task.$id} task={task} getTasks={getTasks} />
+									);
 								}
 							})}
 						</div>
@@ -138,7 +141,9 @@ const Task = () => {
 						<div>
 							{tasks.map((task: ITask) => {
 								if (task.done === true) {
-									return <TaskItem key={task.$id} task={task} />;
+									return (
+										<TaskItem key={task.$id} task={task} getTasks={getTasks} />
+									);
 								}
 							})}
 						</div>

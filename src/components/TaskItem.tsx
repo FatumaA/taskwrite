@@ -8,9 +8,10 @@ import AddTask from "./AddTask";
 
 interface TaskItemProps {
 	task: ITask;
+	getTasks: () => void;
 }
 
-function TaskItem({ task }: TaskItemProps) {
+function TaskItem({ task, getTasks }: TaskItemProps) {
 	const [isEdit, setIsEdit] = useState(false);
 	const [selectedTask, setSelectedTask] = useState<ITask>();
 	const [isDone, setIsDone] = useState(false);
@@ -33,6 +34,7 @@ function TaskItem({ task }: TaskItemProps) {
 		console.log("Delete", currentTaskId);
 		const res = await deleteDocument(currentTaskId);
 		console.log("DELETE RES", res);
+		await getTasks();
 	};
 
 	const handleCheckbox = async (
@@ -51,6 +53,7 @@ function TaskItem({ task }: TaskItemProps) {
 		};
 
 		await updateDocument(payload, id);
+		await getTasks();
 	};
 
 	return (
