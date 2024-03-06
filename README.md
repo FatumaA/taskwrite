@@ -18,7 +18,7 @@ This is a task app that uses Appwrite as a backend.
 
 - [x] User can sort tasks
 
-- [ ] Tasks are draggable
+~~- [ ] Tasks are draggable~~
 
 - [x] Support Dark Mode
 
@@ -28,4 +28,4 @@ This is a task app that uses Appwrite as a backend.
 
 - [x] User can add tasks via voice commands
 
-- [ ] User can get push notifications when tasks are almost due
+~~- [ ] User can get push notifications when tasks are almost due~~
