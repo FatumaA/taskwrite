@@ -1,19 +1,37 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import Select from "./Select";
+import { useState } from "react";
 
 const Navbar = () => {
 	const navigate = useNavigate();
 
+	const themeArray = ["light", "dark", "system"];
+	const [theme, setTheme] = useState(themeArray[2]);
+
 	const handleSelectTheme = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		e.preventDefault();
+		const selectedTheme = e.target.value;
+		setTheme(selectedTheme);
+
+		const isDarkModePreferred = window.matchMedia(
+			"(prefers-color-scheme: dark)"
+		).matches;
+
+		if (selectedTheme === "system") {
+			document.documentElement.classList.toggle("dark", isDarkModePreferred);
+			document.documentElement.classList.toggle("light", !isDarkModePreferred);
+		} else if (selectedTheme === "light") {
+			document.documentElement.classList.remove("dark");
+		} else {
+			document.documentElement.classList.remove("light");
+			document.documentElement.classList.add("dark");
+		}
 	};
 
-	const themeArray = ["light", "dark", "system"];
 	return (
-		<nav className="py-4 border border-b-2 shadow-md w-full fixed top-0 bg-white">
+		<nav className="py-4 border-b-2 border-container shadow-md shadow-gray-400 w-full fixed top-0 bg-base">
 			<ul className="flex items-center justify-between  w-11/12 mx-auto">
 				<Link to="/">
 					<Button
@@ -22,8 +40,9 @@ const Navbar = () => {
 							navigate("/");
 						}}
 						text="Taskwrite"
-						textClasses="font-semibold"
+						textClasses="font-semibold text-main"
 						icon={PencilIcon}
+						iconClasses="text-main"
 					/>
 				</Link>
 				<div className="flex items-center justify-between gap-6">
@@ -36,7 +55,7 @@ const Navbar = () => {
 					<div className="flex gap-2 items-center">
 						<span className="font-semibold"> Theme: </span>
 						<Select
-							defaultSelectValue={themeArray[2]}
+							defaultSelectValue={theme}
 							selectOptions={themeArray}
 							handleSelectChange={handleSelectTheme}
 						/>
