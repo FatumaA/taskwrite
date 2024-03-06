@@ -99,7 +99,7 @@ const Task = () => {
 					<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
 						<Search tasks={tasks} />
 						<Button
-							extraBtnClasses="bg-pink-700 text-white font-medium py-2 hover:bg-pink-800 ml-auto"
+							extraBtnClasses="bg-primary text-white font-medium py-2 hover:bg-primaryHover ml-auto"
 							text="Add Task"
 							icon={PlusIcon}
 							iconClasses="hidden md:flex "

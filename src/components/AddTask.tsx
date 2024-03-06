@@ -145,14 +145,14 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 					placeholder="Title of your task"
 					value={titleVal}
 					onChange={handleTitleChange}
-					className={`border rounded-sm p-2 focus:outline-none focus:ring-1 ${
+					className={`bg-inherit border rounded-sm p-2 focus:outline-none focus:ring-1 ${
 						titleValidationError
-							? "border-red-600 focus:ring-red-500 invalid:focus:ring-red-600"
-							: "border-slate-800 focus:ring-slate-900"
+							? "border-error focus:ring-red-500 invalid:focus:ring-red-600"
+							: "border-input focus:ring-slate-900"
 					}`}
 				/>
 				{titleValidationError && (
-					<span className="text-red-500 mt-1">{titleValidationError}</span>
+					<span className="text-error mt-1">{titleValidationError}</span>
 				)}
 			</div>
 			<div className="flex flex-col mb-6">
@@ -165,20 +165,20 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 					maxLength={200}
 					value={isGenerating ? "generating..." : textAreaVal}
 					onChange={(e) => setTextAreaVal(e.target.value)}
-					className={`border rounded-sm p-2 h-32 resize-none focus:outline-none focus:ring-1 ${
+					className={`bg-inherit border rounded-sm p-2 h-32 resize-none focus:outline-none focus:ring-1 ${
 						textAreaVal.length > 197
-							? "border-red-600 focus:ring-red-500 invalid:focus:ring-red-600"
-							: "border-slate-800 focus:ring-slate-900"
+							? "border-error focus:ring-red-500 invalid:focus:ring-red-600"
+							: "border-input focus:ring-slate-900"
 					}`}
 				/>
 				{textAreaVal.length > 197 && (
-					<span className="text-red-500 mt-1">
+					<span className="text-error mt-1">
 						Warning description getting too long. Can only be 200 characters
 					</span>
 				)}
 				<button
 					onClick={generateDesc}
-					className="bg-gray-200 rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out"
+					className="bg-light text-iconColor rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out"
 				>
 					<span className="mr-1">Generate description</span>
 					<SparklesIcon height={20} />
@@ -204,13 +204,13 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 					value={dueDate!.toISOString().split("T")[0]}
 					min={new Date().toISOString().split("T")[0]}
 					onChange={(e) => setDueDate(new Date(e.target.value))}
-					className="border rounded-sm border-slate-800 p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
+					className="bg-inherit border rounded-sm border-input p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 			</div>
 			<button
 				disabled={isSubmitting}
 				type="submit"
-				className="bg-pink-700 text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-pink-800 focus:ring-1 focus:ring-pink-800 w-full"
+				className="bg-primary text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-primaryHover focus:ring-1 focus:ring-pink-800 w-full"
 			>
 				{task ? "Edit Task" : "Add Task"}
 			</button>

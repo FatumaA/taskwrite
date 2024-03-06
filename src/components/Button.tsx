@@ -24,8 +24,8 @@ function Button({
 		<button
 			onClick={handleClick}
 			title={title ?? ""}
-			className={`flex items-center ${extraBtnClasses} ${
-				textColor ?? null
+			className={`flex items-center text-iconColor ${extraBtnClasses} ${
+				textColor ?? ""
 			} rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out`}
 		>
 			<span className={`${textClasses} mr-1`}>{text}</span>

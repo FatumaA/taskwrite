@@ -27,12 +27,12 @@ function Dialog({
 		<dialog
 			open={isOpen}
 			id="modal"
-			className="p-8 fixed inset-0 backdrop-filter backdrop-blur-md backdrop-brightness-50 w-4/6 border border-gray-400 rounded-md max-h-[80vh] overflow-y-auto"
+			className="p-8 fixed inset-0 backdrop-filter backdrop-blur-md backdrop-brightness-50 w-4/6 border border-container rounded-md max-h-[80vh] overflow-y-auto text-main bg-inherit"
 		>
 			<button
 				onClick={closeModal}
 				id="closeModal"
-				className="flex gap-2 ml-auto font-medium hover:text-red-500"
+				className="flex gap-2 ml-auto font-medium hover:text-error"
 			>
 				<span>Close </span>
 				<XMarkIcon height={25} />

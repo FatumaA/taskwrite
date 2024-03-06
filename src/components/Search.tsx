@@ -56,20 +56,20 @@ const Search = ({ tasks }: SearchProps) => {
 					placeholder="search your tasks..."
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
-					className={`w-5/6 border rounded-md p-2 focus:outline-none focus:ring-1 ${
+					className={`bg-inherit w-5/6 border rounded-md p-2 focus:outline-none focus:ring-1 ${
 						error
-							? "border-red-600 focus:ring-red-500 invalid:focus:ring-red-600"
-							: "border-slate-800 focus:ring-slate-900"
+							? "border-error focus:ring-red-500 invalid:focus:ring-red-600"
+							: "border-input focus:ring-slate-900"
 					}`}
 				/>
 				<button
-					className="rounded-md px-2 py-2 hover:scale-105 transition duration-300 ease-in-out bg-pink-700 text-white hover:bg-pink-800 font-medium"
+					className="bg-primary text-white rounded-md px-2 py-2 hover:scale-105 transition duration-300 ease-in-out btn-bg-primary hover:bg-primaryHover font-medium"
 					type="submit"
 				>
 					Search
 				</button>
 			</form>
-			<span className="text-red-500 font-medium mt-1">{error}</span>
+			<span className="text-error font-medium mt-1">{error}</span>
 		</div>
 	);
 };

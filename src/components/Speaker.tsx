@@ -20,15 +20,15 @@ function Speaker({ handleClear }: SpeakerProps) {
 		<div>
 			{error && <div>{error}</div>}
 			<div className="flex gap-2 py-1 items-center text-center justify-center">
-				<span className="font-medium ">{listening ? "Mic on" : "Mic off"}</span>
+				<span className="font-medium">{listening ? "Mic on" : "Mic off"}</span>
 				<Button
-					extraBtnClasses="bg-green-200"
+					extraBtnClasses="bg-lightOk"
 					title="Start"
 					icon={MicrophoneIcon}
 					handleClick={handleSpeech}
 				/>
 				<Button
-					extraBtnClasses="bg-gray-200"
+					extraBtnClasses="bg-light"
 					title="reset"
 					icon={XCircleIcon}
 					handleClick={handleClear}
