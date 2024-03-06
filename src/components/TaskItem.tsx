@@ -9,7 +9,7 @@ import { getTasks } from "../utils/shared";
 
 interface TaskItemProps {
 	task: ITask;
-	setTasks: (tasks: ITask[]) => void;
+	setTasks?: (tasks: ITask[]) => void;
 }
 
 function TaskItem({ task, setTasks }: TaskItemProps) {
@@ -33,7 +33,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 		e.preventDefault();
 		await deleteDocument(currentTaskId);
 		const allTaks = await getTasks();
-		return setTasks(allTaks.reverse());
+		if (setTasks) return setTasks(allTaks.reverse());
 	};
 
 	const handleCheckbox = async (
@@ -53,7 +53,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 
 		await updateDocument(payload, id);
 		const allTaks = await getTasks();
-		return setTasks(allTaks.reverse());
+		if (setTasks) return setTasks(allTaks.reverse());
 	};
 
 	return (
@@ -68,7 +68,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 					/>
 				</Dialog>
 			)}
-			<div className="m-8 border border-gray-400 rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96">
+			<div className="m-8 border border-container rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96">
 				<section
 					key={task.$id}
 					className="flex flex-col justify-between gap-2 my-4 h-full"
@@ -80,10 +80,10 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 								<span
 									className={`${
 										task.priority === "low"
-											? "bg-yellow-400"
+											? "bg-lowPriority text-iconColor"
 											: task.priority === "medium"
-											? "bg-orange-400"
-											: "bg-red-400"
+											? "bg-mediumPriority text-iconColor"
+											: "bg-highPriority text-iconColor"
 									} py-1 px-2 rounded-md`}
 								>
 									{task.priority}
@@ -93,7 +93,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 						<div className="flex gap-2 py-1 ml-auto">
 							{!task.done && (
 								<Button
-									extraBtnClasses="bg-green-400"
+									extraBtnClasses="bg-ok"
 									text="Edit"
 									icon={PencilSquareIcon}
 									iconClasses="hidden lg:flex"
@@ -102,7 +102,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 							)}
 
 							<Button
-								extraBtnClasses="bg-red-400"
+								extraBtnClasses="bg-highPriority"
 								text="Delete"
 								icon={TrashIcon}
 								iconClasses="hidden lg:flex"
@@ -119,7 +119,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 								? task.description.substring(0, 70) + "..."
 								: task.description}
 						</p>
-						<span className="font-extralight text-gray-600 mt-2">
+						<span className="font-extralight mt-2">
 							<span className="font-medium">Due on: </span>
 							<span className="underline">{`${new Date(
 								task.due_date
@@ -128,7 +128,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 					</section>
 					<section className="flex justify-between">
 						{task.done ? (
-							<span className="items-center text-green-600 font-bol ml-auto">
+							<span className="items-center text-ok font-bol ml-auto">
 								Completed
 							</span>
 						) : (
