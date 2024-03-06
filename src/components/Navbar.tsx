@@ -2,19 +2,17 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import Select from "./Select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
 	const navigate = useNavigate();
 
 	const themeArray = ["light", "dark", "system"];
-	const [theme, setTheme] = useState(themeArray[2]);
+	const [theme, setTheme] = useState(() => {
+		return localStorage.getItem("theme") || themeArray[2];
+	});
 
-	const handleSelectTheme = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		e.preventDefault();
-		const selectedTheme = e.target.value;
-		setTheme(selectedTheme);
-
+	const applyTheme = (selectedTheme: string) => {
 		const isDarkModePreferred = window.matchMedia(
 			"(prefers-color-scheme: dark)"
 		).matches;
@@ -29,6 +27,19 @@ const Navbar = () => {
 			document.documentElement.classList.add("dark");
 		}
 	};
+
+	const handleSelectTheme = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		e.preventDefault();
+		const selectedTheme = e.target.value;
+		setTheme(selectedTheme);
+
+		// Store the selected theme in localStorage
+		localStorage.setItem("theme", selectedTheme);
+	};
+
+	useEffect(() => {
+		applyTheme(theme);
+	}, [theme]);
 
 	return (
 		<nav className="py-4 border-b-2 border-container shadow-md shadow-gray-400 w-full fixed top-0 bg-base">
