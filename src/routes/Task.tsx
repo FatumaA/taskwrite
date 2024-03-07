@@ -8,10 +8,13 @@ import Search from "../components/Search";
 import Select from "../components/Select";
 import { getTasks } from "../utils/shared";
 import Navbar from "../components/Navbar";
+import Dialog from "../components/Dialog";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
 	const [tasksError, setTasksError] = useState("");
+	const [isViewTask, setIsViewTask] = useState(false);
+	const [selectedTask, setSelectedTask] = useState<ITask>();
 
 	const navigate = useNavigate();
 
@@ -75,6 +78,16 @@ const Task = () => {
 		"due date - (latest - earliest)",
 	];
 
+	const handleViewTask = (
+		e: React.MouseEvent<HTMLDivElement>,
+		activeTask: ITask
+	) => {
+		e.preventDefault();
+		console.log("ACTIVE TASK" + activeTask);
+		setIsViewTask(true);
+		setSelectedTask(activeTask);
+	};
+
 	useEffect(() => {
 		getTasks()
 			.then((res) => {
@@ -91,6 +104,14 @@ const Task = () => {
 			<Navbar />
 			<main className="container mx-auto">
 				<section className="max-w-5xl mx-auto m-12 p-16">
+					{isViewTask && selectedTask && (
+						<Dialog key={selectedTask.$id}>
+							<TaskItem
+								task={selectedTask}
+								handleViewTask={(e) => handleViewTask(e, selectedTask!)}
+							/>
+						</Dialog>
+					)}
 					<h1 className="text-4xl md:text-7xl font-bold text-center py-3 mb-16">
 						Your Tasks
 					</h1>
@@ -128,6 +149,7 @@ const Task = () => {
 												key={task.$id}
 												task={task}
 												setTasks={setTasks}
+												handleViewTask={(e) => handleViewTask(e, task)}
 											/>
 										))}
 								</div>
@@ -142,6 +164,7 @@ const Task = () => {
 												key={task.$id}
 												task={task}
 												setTasks={setTasks}
+												handleViewTask={(e) => handleViewTask(e, task)}
 											/>
 										))}
 								</div>

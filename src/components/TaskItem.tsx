@@ -3,16 +3,16 @@ import Button from "./Button";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { IPayload, ITask } from "../models/interface";
 import { deleteDocument, updateDocument } from "../utils/db";
-import Dialog from "./Dialog";
 import { getTasks } from "../utils/shared";
 import { useNavigate } from "react-router-dom";
 
 interface TaskItemProps {
 	task: ITask;
 	setTasks?: (tasks: ITask[]) => void;
+	handleViewTask?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function TaskItem({ task, setTasks }: TaskItemProps) {
+function TaskItem({ task, setTasks, handleViewTask }: TaskItemProps) {
 	const navigate = useNavigate();
 
 	const [isDone, setIsDone] = useState(false);
@@ -72,17 +72,10 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 
 	return (
 		<>
-			{/* {isEdit && (
-				<Dialog setIsEdit={setIsEdit} isEdit>
-					<AddTask
-						task={selectedTask!}
-						isEdit={true}
-						setIsEdit={setIsEdit}
-						setTasks={setTasks}
-					/>
-				</Dialog>
-			)} */}
-			<div className="m-8 border border-container rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96">
+			<div
+				className="m-8 cursor-pointer border border-container rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96"
+				onClick={handleViewTask}
+			>
 				<section
 					key={task.$id}
 					className="flex flex-col justify-between gap-2 my-4 h-full"
