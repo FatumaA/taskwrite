@@ -23,9 +23,12 @@ const Search = ({ tasks }: SearchProps) => {
 			return;
 		}
 
+		const caseInsensitiveSearchTerm = searchTerm.toLowerCase();
+
 		const filteredTasks = tasks.filter(
 			(task) =>
-				task.title.includes(searchTerm) || task.description.includes(searchTerm)
+				task.title.toLowerCase().includes(caseInsensitiveSearchTerm) ||
+				task.description.toLowerCase().includes(caseInsensitiveSearchTerm)
 		);
 		if (filteredTasks.length === 0) {
 			setError("No task found");
