@@ -89,7 +89,7 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 
 		if (isEdit && task) {
 			await updateDocument(payload, task!.$id);
-			setIsEdit!(false);
+			// setIsEdit!(false);
 			const allTaks = await getTasks();
 			if (setTasks) return setTasks(allTaks.reverse());
 		} else {

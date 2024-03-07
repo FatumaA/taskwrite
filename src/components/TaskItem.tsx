@@ -4,8 +4,8 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { IPayload, ITask } from "../models/interface";
 import { deleteDocument, updateDocument } from "../utils/db";
 import Dialog from "./Dialog";
-import AddTask from "./AddTask";
 import { getTasks } from "../utils/shared";
+import { useNavigate } from "react-router-dom";
 
 interface TaskItemProps {
 	task: ITask;
@@ -13,8 +13,8 @@ interface TaskItemProps {
 }
 
 function TaskItem({ task, setTasks }: TaskItemProps) {
-	const [isEdit, setIsEdit] = useState(false);
-	const [selectedTask, setSelectedTask] = useState<ITask>();
+	const navigate = useNavigate();
+
 	const [isDone, setIsDone] = useState(false);
 
 	const updateTasks = async () => {
@@ -31,8 +31,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 		currentTask: ITask
 	) => {
 		e.preventDefault();
-		setIsEdit(true);
-		setSelectedTask(currentTask);
+		navigate("/", { state: { task: currentTask } });
 	};
 
 	const handleDelete = async (
@@ -73,7 +72,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 
 	return (
 		<>
-			{isEdit && (
+			{/* {isEdit && (
 				<Dialog setIsEdit={setIsEdit} isEdit>
 					<AddTask
 						task={selectedTask!}
@@ -82,7 +81,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 						setTasks={setTasks}
 					/>
 				</Dialog>
-			)}
+			)} */}
 			<div className="m-8 border border-container rounded-md p-4 hover:shadow-lg transition duration-300 ease-in-out max-h-96">
 				<section
 					key={task.$id}
