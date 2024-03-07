@@ -109,6 +109,7 @@ const Task = () => {
 							<TaskItem
 								task={selectedTask}
 								handleViewTask={(e) => handleViewTask(e, selectedTask!)}
+								isViewTask={isViewTask}
 							/>
 						</Dialog>
 					)}
@@ -150,6 +151,7 @@ const Task = () => {
 												task={task}
 												setTasks={setTasks}
 												handleViewTask={(e) => handleViewTask(e, task)}
+												isViewTask={isViewTask}
 											/>
 										))}
 								</div>
@@ -165,6 +167,7 @@ const Task = () => {
 												task={task}
 												setTasks={setTasks}
 												handleViewTask={(e) => handleViewTask(e, task)}
+												isViewTask={isViewTask}
 											/>
 										))}
 								</div>

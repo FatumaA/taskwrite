@@ -9,10 +9,16 @@ import { useNavigate } from "react-router-dom";
 interface TaskItemProps {
 	task: ITask;
 	setTasks?: (tasks: ITask[]) => void;
+	isViewTask: boolean;
 	handleViewTask?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function TaskItem({ task, setTasks, handleViewTask }: TaskItemProps) {
+function TaskItem({
+	task,
+	setTasks,
+	isViewTask = false,
+	handleViewTask,
+}: TaskItemProps) {
 	const navigate = useNavigate();
 
 	const [isDone, setIsDone] = useState(false);
@@ -120,7 +126,7 @@ function TaskItem({ task, setTasks, handleViewTask }: TaskItemProps) {
 							{task.title}
 						</h2>
 						<p className="py-1 mb-4 min-h-16 break-words">
-							{task.description.length > 70
+							{task.description.length > 70 && !isViewTask
 								? task.description.substring(0, 70) + "..."
 								: task.description}
 						</p>
