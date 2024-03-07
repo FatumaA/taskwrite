@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import Search from "../components/Search";
 import Select from "../components/Select";
 import { getTasks } from "../utils/shared";
-import Navbar from "../components/Navbar";
 import Dialog from "../components/Dialog";
 
 const Task = () => {
@@ -100,83 +99,80 @@ const Task = () => {
 	}, []);
 
 	return (
-		<>
-			<Navbar />
-			<main className="container mx-auto">
-				<section className="max-w-5xl mx-auto m-12 p-16">
-					{isViewTask && selectedTask && (
-						<Dialog key={selectedTask.$id} setIsViewTask={setIsViewTask}>
-							<TaskItem
-								task={selectedTask}
-								handleViewTask={(e) => handleViewTask(e, selectedTask!)}
-								isViewTask={isViewTask}
-							/>
-						</Dialog>
-					)}
-					<h1 className="text-4xl md:text-7xl font-bold text-center py-3 mb-16">
-						Your Tasks
-					</h1>
-					<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
-						<Search tasks={tasks} />
-						<Button
-							extraBtnClasses="bg-primary text-white font-medium py-2 hover:bg-primaryHover ml-auto"
-							content={{ text: "Add Task", icon: PlusIcon }}
-							iconClasses="hidden md:flex "
-							handleClick={(e) => {
-								e.preventDefault();
-								navigate("/");
-							}}
+		<main className="container mx-auto">
+			<section className="max-w-5xl mx-auto m-12 p-16">
+				{isViewTask && selectedTask && (
+					<Dialog key={selectedTask.$id} setIsViewTask={setIsViewTask}>
+						<TaskItem
+							task={selectedTask}
+							handleViewTask={(e) => handleViewTask(e, selectedTask!)}
+							isViewTask={isViewTask}
 						/>
-					</div>
-					{tasksError ? (
-						<span className="m-8 text-error">{tasksError}</span>
-					) : (
-						<div className="flex flex-col md:flex-row justify-between">
-							<div className="flex-1">
-								<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
-								<div className="m-8 flex items-start lg:items-center gap-1 justify-between flex-col lg:flex-row">
-									<span className="font-medium">Sort Tasks by: </span>
-									<Select
-										defaultSelectValue={selectArray[0]}
-										handleSelectChange={handleSelectChange}
-										selectOptions={selectArray}
-									/>
-								</div>
-								<div>
-									{tasks
-										.filter((task) => !task.done)
-										.map((task) => (
-											<TaskItem
-												key={task.$id}
-												task={task}
-												setTasks={setTasks}
-												handleViewTask={(e) => handleViewTask(e, task)}
-												isViewTask={isViewTask}
-											/>
-										))}
-								</div>
+					</Dialog>
+				)}
+				<h1 className="text-4xl md:text-7xl font-bold text-center py-3 mb-16">
+					Your Tasks
+				</h1>
+				<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
+					<Search tasks={tasks} />
+					<Button
+						extraBtnClasses="bg-primary text-white font-medium py-2 hover:bg-primaryHover ml-auto"
+						content={{ text: "Add Task", icon: PlusIcon }}
+						iconClasses="hidden md:flex "
+						handleClick={(e) => {
+							e.preventDefault();
+							navigate("/");
+						}}
+					/>
+				</div>
+				{tasksError ? (
+					<span className="m-8 text-error">{tasksError}</span>
+				) : (
+					<div className="flex flex-col md:flex-row justify-between">
+						<div className="flex-1">
+							<h3 className="text-2xl font-bold m-8">Pending Tasks</h3>
+							<div className="m-8 flex items-start lg:items-center gap-1 justify-between flex-col lg:flex-row">
+								<span className="font-medium">Sort Tasks by: </span>
+								<Select
+									defaultSelectValue={selectArray[0]}
+									handleSelectChange={handleSelectChange}
+									selectOptions={selectArray}
+								/>
 							</div>
-							<div className="flex-1">
-								<h3 className="text-2xl font-bold m-8">Completed Tasks</h3>
-								<div>
-									{tasks
-										.filter((task) => task.done)
-										.map((task) => (
-											<TaskItem
-												key={task.$id}
-												task={task}
-												setTasks={setTasks}
-												handleViewTask={(e) => handleViewTask(e, task)}
-												isViewTask={isViewTask}
-											/>
-										))}
-								</div>
+							<div>
+								{tasks
+									.filter((task) => !task.done)
+									.map((task) => (
+										<TaskItem
+											key={task.$id}
+											task={task}
+											setTasks={setTasks}
+											handleViewTask={(e) => handleViewTask(e, task)}
+											isViewTask={isViewTask}
+										/>
+									))}
 							</div>
 						</div>
-					)}
-				</section>
-			</main>
-		</>
+						<div className="flex-1">
+							<h3 className="text-2xl font-bold m-8">Completed Tasks</h3>
+							<div>
+								{tasks
+									.filter((task) => task.done)
+									.map((task) => (
+										<TaskItem
+											key={task.$id}
+											task={task}
+											setTasks={setTasks}
+											handleViewTask={(e) => handleViewTask(e, task)}
+											isViewTask={isViewTask}
+										/>
+									))}
+							</div>
+						</div>
+					</div>
+				)}
+			</section>
+		</main>
 	);
 };
 
