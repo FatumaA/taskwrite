@@ -1,6 +1,9 @@
 # task-app-appwrite
 
 This is a task app that uses Appwrite as a backend.
+Live URL: [https://taskwrite.netlify.app/](https://task-app-appwrite.netlify.app/)
+
+<!-- add images, gifs -->
 
 **Features - MVE(xample)**
 
