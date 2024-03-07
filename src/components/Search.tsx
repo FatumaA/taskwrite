@@ -49,7 +49,7 @@ const Search = ({ tasks }: SearchProps) => {
 				{searchedTasks.length > 0 && (
 					<Dialog setSearchedTasks={setSearchedTasks}>
 						{searchedTasks.map((task: ITask) => (
-							<TaskItem key={task.$id} task={task} />
+							<TaskItem key={task.$id} task={task} isViewTask={true} />
 						))}
 					</Dialog>
 				)}

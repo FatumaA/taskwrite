@@ -4,7 +4,7 @@ import { ITask } from "../models/interface";
 import Button from "./Button";
 
 interface DialogProps {
-	setIsViewTask: (isViewTask: boolean) => void;
+	setIsViewTask?: (isViewTask: boolean) => void;
 	setSearchedTasks?: (tasks: ITask[]) => void;
 	children: ReactNode;
 }
