@@ -17,14 +17,12 @@ const Navbar = () => {
 			"(prefers-color-scheme: dark)"
 		).matches;
 
+		document.documentElement.classList.remove("light", "dark");
+		document.documentElement.classList.add(selectedTheme);
+
 		if (selectedTheme === "system") {
 			document.documentElement.classList.toggle("dark", isDarkModePreferred);
 			document.documentElement.classList.toggle("light", !isDarkModePreferred);
-		} else if (selectedTheme === "light") {
-			document.documentElement.classList.remove("dark");
-		} else {
-			document.documentElement.classList.remove("light");
-			document.documentElement.classList.add("dark");
 		}
 	};
 
@@ -44,12 +42,14 @@ const Navbar = () => {
 	return (
 		<nav className="py-4 border-b-2 border-container shadow-md shadow-gray-400 w-full fixed top-0 bg-base">
 			<ul className="flex items-center justify-between  w-11/12 mx-auto">
-				<Link to="/">
+				<Link
+					to="/"
+					onClick={(e) => {
+						e.preventDefault();
+						navigate("/");
+					}}
+				>
 					<Button
-						handleClick={(e) => {
-							e.preventDefault();
-							navigate("/");
-						}}
 						content={{
 							text: "Taskwrite",
 							icon: PencilIcon,
