@@ -67,19 +67,17 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 		setIsSubmitting(true);
 
 		if (!titleVal) {
-			setTitleValidationError("Please provide atleast a title for the task");
-			return setTimeout(() => {
-				setTitleValidationError("");
-			}, 2000);
+			setTitleValidationError("Please provide at least a title for the task");
+			setTimeout(() => setTitleValidationError(""), 2000);
+			return;
 		}
 
 		if (titleVal.length > 49) {
 			setTitleValidationError(
 				"Title too long. It can only be 49 characters long"
 			);
-			return setTimeout(() => {
-				setTitleValidationError("");
-			}, 2000);
+			setTimeout(() => setTitleValidationError(""), 2000);
+			return; // Removed unnecessary else
 		}
 
 		const payload: IPayload = {
@@ -112,7 +110,10 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 		e.preventDefault();
 		setTextAreaVal("");
 
-		if (!titleVal) return alert("Please provide a title for the task");
+		if (!titleVal) {
+			alert("Please provide a title for the task");
+			return;
+		}
 		setIsGenerating(true);
 
 		const prompt = `Provide a description for this task: ${titleVal}. Keep the description to a maximum of 30 words`;
