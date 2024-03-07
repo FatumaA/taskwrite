@@ -24,14 +24,14 @@ function Speaker({ handleClear }: SpeakerProps) {
 				<Button
 					extraBtnClasses="bg-lightOk"
 					title="Start"
-					icon={MicrophoneIcon}
+					content={{ icon: MicrophoneIcon }}
 					handleClick={handleSpeech}
 				/>
 				<Button
 					type="reset"
 					extraBtnClasses="bg-light"
 					title="reset"
-					icon={XCircleIcon}
+					content={{ icon: XCircleIcon }}
 					handleClick={handleClear}
 				/>
 			</div>

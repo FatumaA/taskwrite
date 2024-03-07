@@ -100,8 +100,7 @@ const Task = () => {
 						<Search tasks={tasks} />
 						<Button
 							extraBtnClasses="bg-primary text-white font-medium py-2 hover:bg-primaryHover ml-auto"
-							text="Add Task"
-							icon={PlusIcon}
+							content={{ text: "Add Task", icon: PlusIcon }}
 							iconClasses="hidden md:flex "
 							handleClick={(e) => {
 								e.preventDefault();

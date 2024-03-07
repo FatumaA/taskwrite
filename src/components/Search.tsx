@@ -65,7 +65,7 @@ const Search = ({ tasks }: SearchProps) => {
 				/>
 				<Button
 					type="submit"
-					text="Search"
+					content={{ text: "Search" }}
 					extraBtnClasses="bg-primary hover:bg-primaryHover font-medium text-main py-2 "
 				/>
 			</form>

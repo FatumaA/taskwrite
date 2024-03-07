@@ -179,9 +179,11 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 				)}
 				<Button
 					handleClick={generateDesc}
-					text="Generate description"
+					content={{
+						text: "Generate description",
+						icon: SparklesIcon,
+					}}
 					extraBtnClasses="bg-light mt-2 w-fit ml-auto"
-					icon={SparklesIcon}
 					iconClasses="h-5"
 				/>
 			</div>
@@ -210,7 +212,9 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 			</div>
 			<Button
 				type="submit"
-				text={task ? "Edit Task" : "Add Task"}
+				content={{
+					text: task ? "Edit Task" : "Add Task",
+				}}
 				disable={isSubmitting}
 				extraBtnClasses="bg-primary justify-center text-white font-semibold px-4 py-2 outline-1 hover:bg-primaryHover focus:ring-1 focus:ring-pink-800 w-full"
 			/>

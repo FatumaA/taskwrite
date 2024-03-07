@@ -94,8 +94,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 							{!task.done && (
 								<Button
 									extraBtnClasses="bg-ok"
-									text="Edit"
-									icon={PencilSquareIcon}
+									content={{ text: "Edit", icon: PencilSquareIcon }}
 									iconClasses="hidden lg:flex"
 									handleClick={(e) => handleEdit(e, task)}
 								/>
@@ -103,8 +102,7 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 
 							<Button
 								extraBtnClasses="bg-highPriority"
-								text="Delete"
-								icon={TrashIcon}
+								content={{ text: "Delete", icon: TrashIcon }}
 								iconClasses="hidden lg:flex"
 								handleClick={(e) => handleDelete(e, task.$id)}
 							/>

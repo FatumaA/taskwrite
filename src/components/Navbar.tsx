@@ -50,9 +50,11 @@ const Navbar = () => {
 							e.preventDefault();
 							navigate("/");
 						}}
-						text="Taskwrite"
+						content={{
+							text: "Taskwrite",
+							icon: PencilIcon,
+						}}
 						textClasses="font-semibold text-main"
-						icon={PencilIcon}
 						iconClasses="text-main"
 					/>
 				</Link>

@@ -32,8 +32,7 @@ function Dialog({
 		>
 			<Button
 				handleClick={closeModal}
-				text="Close"
-				icon={XMarkIcon}
+				content={{ text: "Close", icon: XMarkIcon }}
 				extraBtnClasses="ml-auto text-main font-medium hover:text-error"
 			/>
 			<div className="max-h-[80vh] overflow-y-auto">{children}</div>
