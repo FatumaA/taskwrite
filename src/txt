@@ -1,0 +1,38 @@
+**Text:**
+
+- text-red-500 --text-error
+- text-white --text-light
+- text-green-600 --text-ok
+
+**Border:**
+
+- border-red-600 --border-error
+- border-slate-800 --border-input
+- border-gray-400 --border-container
+
+**Focus Ring:**
+
+<!--
+- focus:ring-red-500 --focus-input-error
+- focus:ring-slate-900 --focus-border-input
+- focus:ring-pink-800 --focus-input-primary -->
+
+**Background:**
+
+- bg-gray-200 --btn-bg-light
+- bg-pink-700 --btn-bg-primary
+- bg-green-200 --btn-bg-light-ok
+- bg-yellow-400 --low-priority
+- bg-orange-400 --medium-priority
+- bg-red-400 --high-priority
+- bg-green-400 --btn-bg-ok
+
+**Hover Effects:**
+
+- hover:bg-pink-800 --btn-bg-primary-hover
+- hover:shadow-lg
+- hover:text-red-500
+
+**Transition:**
+
+- transition duration-300 ease-in-out
