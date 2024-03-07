@@ -19,7 +19,7 @@ interface ITaskFormProps {
 	setTasks?: (tasks: ITask[]) => void;
 }
 
-const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
+const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 	const navigate = useNavigate();
 	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
@@ -66,44 +66,50 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 		e.preventDefault();
 		setIsSubmitting(true);
 
-		if (!titleVal) {
-			setTitleValidationError("Please provide at least a title for the task");
-			setTimeout(() => setTitleValidationError(""), 2000);
-			return;
+		try {
+			if (!titleVal) {
+				setTitleValidationError("Please provide at least a title for the task");
+				setTimeout(() => setTitleValidationError(""), 2000);
+				setIsSubmitting(false);
+				return;
+			}
+
+			if (titleVal.length > 49) {
+				setTitleValidationError(
+					"Title too long. It can only be 49 characters long"
+				);
+				setTimeout(() => setTitleValidationError(""), 2000);
+				setIsSubmitting(false);
+				return;
+			}
+
+			const payload: IPayload = {
+				title: titleVal,
+				description: textAreaVal,
+				due_date: dueDate,
+				priority: priority,
+			};
+
+			if (isEdit && task) {
+				await updateDocument(payload, task!.$id);
+				const allTasks = await getTasks();
+				if (setTasks) return setTasks(allTasks.reverse());
+			} else {
+				await createDocument(payload);
+			}
+
+			// reset form
+			setTitleVal("");
+			setTextAreaVal("");
+			setDueDate(new Date());
+			setPriority(priorityArray[0]);
+			setTitleValidationError("");
+			setIsSubmitting(false);
+			navigate("/tasks", { replace: true });
+		} catch (error) {
+			console.error("Error in handleSubmitTask:", error);
+			setIsSubmitting(false);
 		}
-
-		if (titleVal.length > 49) {
-			setTitleValidationError(
-				"Title too long. It can only be 49 characters long"
-			);
-			setTimeout(() => setTitleValidationError(""), 2000);
-			return; // Removed unnecessary else
-		}
-
-		const payload: IPayload = {
-			title: titleVal,
-			description: textAreaVal,
-			due_date: dueDate,
-			priority: priority,
-		};
-
-		if (isEdit && task) {
-			await updateDocument(payload, task!.$id);
-			// setIsEdit!(false);
-			const allTaks = await getTasks();
-			if (setTasks) return setTasks(allTaks.reverse());
-		} else {
-			await createDocument(payload);
-		}
-
-		// reset form
-		setTitleVal("");
-		setTextAreaVal("");
-		setDueDate(new Date());
-		setPriority(priorityArray[0]);
-		setTitleValidationError("");
-		setIsSubmitting(false);
-		navigate("/tasks");
 	};
 
 	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -214,7 +220,11 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 			<Button
 				type="submit"
 				content={{
-					text: task ? "Edit Task" : "Add Task",
+					text: isSubmitting
+						? "isSubmitting..."
+						: task
+						? "Edit Task"
+						: "Add Task",
 				}}
 				disable={isSubmitting}
 				extraBtnClasses="bg-primary justify-center text-white font-semibold px-4 py-2 outline-1 hover:bg-primaryHover focus:ring-1 focus:ring-pink-800 w-full"
