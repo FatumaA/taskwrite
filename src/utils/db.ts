@@ -1,4 +1,4 @@
-import { ID, databases } from "../utils/appwrite";
+import { ID, databases } from "./appwrite";
 import { IPayload } from "../models/interface";
 
 const dbID: string = import.meta.env.VITE_APPWRITE_DB_ID;
