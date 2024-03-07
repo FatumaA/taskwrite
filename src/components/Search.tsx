@@ -66,7 +66,7 @@ const Search = ({ tasks }: SearchProps) => {
 				<Button
 					type="submit"
 					content={{ text: "Search" }}
-					extraBtnClasses="bg-primary hover:bg-primaryHover font-medium text-main py-2 "
+					extraBtnClasses="bg-primary text-white hover:bg-primaryHover font-medium text-main py-2 "
 				/>
 			</form>
 			<span className="text-error font-medium mt-1">{error}</span>
