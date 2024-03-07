@@ -28,7 +28,11 @@ function Dialog({
 		<dialog
 			open={isOpen}
 			id="modal"
-			className="p-8 fixed inset-0 backdrop-filter backdrop-blur-md backdrop-brightness-50 w-4/6 border border-container rounded-md max-h-[80vh] overflow-y-auto text-main bg-inherit"
+			style={{
+				backgroundColor: "var(--base-bg)",
+				color: "var(--text-main)",
+			}}
+			className="p-8 fixed inset-0 backdrop-filter backdrop-blur-md backdrop-brightness-50 w-4/6 border border-container rounded-md max-h-[80vh] overflow-y-auto text-main"
 		>
 			<Button
 				handleClick={closeModal}
