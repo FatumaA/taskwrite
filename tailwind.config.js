@@ -8,7 +8,7 @@ export default {
 				error: "var(--text-error)",
 				ok: "var(--text-ok)",
 				main: "var(--text-main)",
-				iconColor: "var( --btn-icon-main)",
+				iconColor: "var(--btn-icon-main)",
 			},
 			backgroundColor: {
 				base: "var(--base-bg)",
