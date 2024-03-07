@@ -17,6 +17,15 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 	const [selectedTask, setSelectedTask] = useState<ITask>();
 	const [isDone, setIsDone] = useState(false);
 
+	const updateTasks = async () => {
+		try {
+			const allTasks = await getTasks();
+			if (setTasks) setTasks(allTasks.reverse());
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const handleEdit = async (
 		e: React.MouseEvent<HTMLButtonElement>,
 		currentTask: ITask
@@ -31,9 +40,12 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 		currentTaskId: string
 	) => {
 		e.preventDefault();
-		await deleteDocument(currentTaskId);
-		const allTaks = await getTasks();
-		if (setTasks) return setTasks(allTaks.reverse());
+		try {
+			await deleteDocument(currentTaskId);
+			updateTasks();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const handleCheckbox = async (
@@ -51,9 +63,12 @@ function TaskItem({ task, setTasks }: TaskItemProps) {
 			done: checkedVal,
 		};
 
-		await updateDocument(payload, id);
-		const allTaks = await getTasks();
-		if (setTasks) return setTasks(allTaks.reverse());
+		try {
+			await updateDocument(payload, id);
+			updateTasks();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (

@@ -5,7 +5,6 @@ import SpeechRecognition from "react-speech-recognition";
 
 interface SpeakerProps {
 	handleClear: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	// id: string;
 }
 
 function Speaker({ handleClear }: SpeakerProps) {
