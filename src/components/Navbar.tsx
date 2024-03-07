@@ -4,7 +4,11 @@ import { PencilIcon } from "@heroicons/react/24/solid";
 import Select from "./Select";
 import { useEffect, useState } from "react";
 
-const Navbar = () => {
+interface NavbarProps {
+	resetNavigation?: boolean;
+}
+
+const Navbar = ({ resetNavigation = false }: NavbarProps) => {
 	const navigate = useNavigate();
 
 	const themeArray = ["light", "dark", "system"];
@@ -46,7 +50,7 @@ const Navbar = () => {
 					to="/"
 					onClick={(e) => {
 						e.preventDefault();
-						navigate("/");
+						resetNavigation ? navigate(0) : navigate("/");
 					}}
 				>
 					<Button
