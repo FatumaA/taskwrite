@@ -8,6 +8,7 @@ import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 import Select from "./Select";
 import { useNavigate } from "react-router-dom";
 import { getTasks } from "../utils/shared";
+import Button from "./Button";
 
 // pass a task and an isEdit boolean
 // if isEdit is true, then the form will be populated with the task's data
@@ -176,13 +177,13 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 						Warning description getting too long. Can only be 200 characters
 					</span>
 				)}
-				<button
-					onClick={generateDesc}
-					className="bg-light text-iconColor rounded-md mt-2 w-fit px-2 py-1 ml-auto flex items-cemter hover:scale-105 transition duration-300 ease-in-out"
-				>
-					<span className="mr-1">Generate description</span>
-					<SparklesIcon height={20} />
-				</button>
+				<Button
+					handleClick={generateDesc}
+					text="Generate description"
+					extraBtnClasses="bg-light mt-2 w-fit ml-auto"
+					icon={SparklesIcon}
+					iconClasses="h-5"
+				/>
 			</div>
 			<div className="flex flex-col mb-6">
 				<label htmlFor="description" className="mb-1">
@@ -207,13 +208,12 @@ const AddTask = ({ task, isEdit, setIsEdit, setTasks }: ITaskFormProps) => {
 					className="bg-inherit border rounded-sm border-input p-2 focus:outline-none focus:ring-1 focus:ring-slate-900 invalid:focus:ring-red-600"
 				/>
 			</div>
-			<button
-				disabled={isSubmitting}
+			<Button
 				type="submit"
-				className="bg-primary text-white font-semibold px-4 py-2 rounded-md outline-1 hover:bg-primaryHover focus:ring-1 focus:ring-pink-800 w-full"
-			>
-				{task ? "Edit Task" : "Add Task"}
-			</button>
+				text={task ? "Edit Task" : "Add Task"}
+				disable={isSubmitting}
+				extraBtnClasses="bg-primary justify-center text-white font-semibold px-4 py-2 outline-1 hover:bg-primaryHover focus:ring-1 focus:ring-pink-800 w-full"
+			/>
 		</form>
 	);
 };

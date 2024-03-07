@@ -28,6 +28,7 @@ function Speaker({ handleClear }: SpeakerProps) {
 					handleClick={handleSpeech}
 				/>
 				<Button
+					type="reset"
 					extraBtnClasses="bg-light"
 					title="reset"
 					icon={XCircleIcon}

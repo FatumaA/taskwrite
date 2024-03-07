@@ -1,6 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ReactNode, useState } from "react";
 import { ITask } from "../models/interface";
+import Button from "./Button";
 
 interface DialogProps {
 	isEdit?: boolean;
@@ -29,14 +30,12 @@ function Dialog({
 			id="modal"
 			className="p-8 fixed inset-0 backdrop-filter backdrop-blur-md backdrop-brightness-50 w-4/6 border border-container rounded-md max-h-[80vh] overflow-y-auto text-main bg-inherit"
 		>
-			<button
-				onClick={closeModal}
-				id="closeModal"
-				className="flex gap-2 ml-auto font-medium hover:text-error"
-			>
-				<span>Close </span>
-				<XMarkIcon height={25} />
-			</button>
+			<Button
+				handleClick={closeModal}
+				text="Close"
+				icon={XMarkIcon}
+				extraBtnClasses="ml-auto text-main font-medium hover:text-error"
+			/>
 			<div className="max-h-[80vh] overflow-y-auto">{children}</div>
 		</dialog>
 	);

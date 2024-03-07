@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { ITask } from "../models/interface";
 import Dialog from "./Dialog";
 import TaskItem from "./TaskItem";
+import Button from "./Button";
 
 interface SearchProps {
 	tasks: ITask[];
@@ -62,12 +63,11 @@ const Search = ({ tasks }: SearchProps) => {
 							: "border-input focus:ring-slate-900"
 					}`}
 				/>
-				<button
-					className="bg-primary text-white rounded-md px-2 py-2 hover:scale-105 transition duration-300 ease-in-out btn-bg-primary hover:bg-primaryHover font-medium"
+				<Button
 					type="submit"
-				>
-					Search
-				</button>
+					text="Search"
+					extraBtnClasses="bg-primary hover:bg-primaryHover font-medium text-main py-2 "
+				/>
 			</form>
 			<span className="text-error font-medium mt-1">{error}</span>
 		</div>
