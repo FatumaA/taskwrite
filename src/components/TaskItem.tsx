@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "./Button";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { IPayload, ITask } from "../models/interface";
-import { deleteDocument, updateDocument } from "../db/db";
+import { deleteDocument, updateDocument } from "../utils/db";
 import Dialog from "./Dialog";
 import AddTask from "./AddTask";
 import { getTasks } from "../utils/shared";

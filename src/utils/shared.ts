@@ -1,4 +1,4 @@
-import { readDocuments } from "../db/db";
+import { readDocuments } from "./db";
 import { ITask } from "../models/interface";
 
 export const getTasks = async () => {

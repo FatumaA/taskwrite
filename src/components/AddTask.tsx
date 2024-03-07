@@ -1,5 +1,5 @@
 import { SparklesIcon } from "@heroicons/react/24/solid";
-import { createDocument, updateDocument } from "../db/db";
+import { createDocument, updateDocument } from "../utils/db";
 import { IPayload, ITask } from "../models/interface";
 import { callAI } from "../utils/ai";
 import { useEffect, useState } from "react";
