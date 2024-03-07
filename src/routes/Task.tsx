@@ -105,7 +105,7 @@ const Task = () => {
 			<main className="container mx-auto">
 				<section className="max-w-5xl mx-auto m-12 p-16">
 					{isViewTask && selectedTask && (
-						<Dialog key={selectedTask.$id}>
+						<Dialog key={selectedTask.$id} setIsViewTask={setIsViewTask}>
 							<TaskItem
 								task={selectedTask}
 								handleViewTask={(e) => handleViewTask(e, selectedTask!)}

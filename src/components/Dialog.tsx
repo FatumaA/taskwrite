@@ -4,24 +4,17 @@ import { ITask } from "../models/interface";
 import Button from "./Button";
 
 interface DialogProps {
-	isEdit?: boolean;
-	setIsEdit?: (isEdit: boolean) => void;
+	setIsViewTask: (isViewTask: boolean) => void;
 	setSearchedTasks?: (tasks: ITask[]) => void;
 	children: ReactNode;
 }
 
-function Dialog({
-	setIsEdit,
-	isEdit,
-	setSearchedTasks,
-	children,
-}: DialogProps) {
+function Dialog({ setIsViewTask, setSearchedTasks, children }: DialogProps) {
 	const [isOpen, setIsOpen] = useState(true);
 
 	const closeModal = () => {
-		if (setIsEdit) setIsEdit(!isEdit);
+		if (setIsViewTask) setIsViewTask(false);
 		if (setSearchedTasks) setSearchedTasks([]);
-
 		setIsOpen(false);
 	};
 	return (
