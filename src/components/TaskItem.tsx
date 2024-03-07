@@ -45,6 +45,7 @@ function TaskItem({
 		currentTaskId: string
 	) => {
 		e.preventDefault();
+		e.stopPropagation();
 		try {
 			await deleteDocument(currentTaskId);
 			updateTasks();
