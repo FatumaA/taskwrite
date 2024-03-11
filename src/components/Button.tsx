@@ -1,38 +1,24 @@
-type ButtonContent =
-	| {
-			text: string;
-			icon?: React.ElementType;
-	  }
-	| {
-			text?: string;
-			icon: React.ElementType;
-	  };
+import { ReactNode } from "react";
 
 interface ButtonProps {
 	extraBtnClasses?: string;
 	textColor?: string;
-	content: ButtonContent;
-	iconClasses?: string;
-	textClasses?: string;
 	handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	title?: string;
 	disable?: boolean;
 	type?: "button" | "submit" | "reset";
+	children: ReactNode;
 }
 
 function Button({
 	extraBtnClasses,
 	textColor,
-	content: { text, icon },
-	iconClasses,
-	textClasses,
 	handleClick,
 	title,
 	disable,
 	type = "button",
+	children,
 }: ButtonProps) {
-	const Icon = icon;
-
 	const handleClickProp = type === "submit" ? undefined : handleClick;
 
 	return (
@@ -41,12 +27,11 @@ function Button({
 			title={title ?? ""}
 			onClick={handleClickProp}
 			disabled={disable}
-			className={`flex items-center text-iconColor ${extraBtnClasses} ${
+			className={`flex gap-2 items-center text-iconColor ${extraBtnClasses} ${
 				textColor ?? ""
 			} rounded-md px-2 py-1 hover:scale-105 transition duration-300 ease-in-out`}
 		>
-			<span className={`${textClasses} mr-1`}>{text ?? ""}</span>
-			{Icon && <Icon height={25} className={iconClasses} />}
+			{children}
 		</button>
 	);
 }
