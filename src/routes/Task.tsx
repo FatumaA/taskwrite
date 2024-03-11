@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { ITask } from "../models/interface";
 import TaskItem from "../components/TaskItem";
-import Button from "../components/Button";
-import { PlusIcon } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
-import Search from "../components/Search";
-import Select from "../components/Select";
 import { getTasks } from "../utils/shared";
 import Dialog from "../components/Dialog";
+import Button from "../components/Button";
+import Search from "../components/Search";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
+import Select from "../components/Select";
+import { sortByDueDate } from "../utils/db";
 
 const Task = () => {
 	const [tasks, setTasks] = useState<ITask[]>([]);
@@ -17,54 +18,43 @@ const Task = () => {
 
 	const navigate = useNavigate();
 
-	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		e.preventDefault();
+	const sortByPriority = (tasksList: ITask[], isAsc: boolean): ITask[] => {
+		const priorityOrder: { [key: string]: number } = {
+			low: 1,
+			medium: 2,
+			high: 3,
+		};
 
+		return [...tasksList].sort((a, b) => {
+			const priorityA = priorityOrder[a.priority!.toLowerCase()];
+			const priorityB = priorityOrder[b.priority!.toLowerCase()];
+			return isAsc ? priorityA - priorityB : priorityB - priorityA;
+		});
+	};
+
+	const handleSelectChange = async (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const selectedOption = e.target.value;
 		const doneTasks = tasks.filter((task) => task.done);
-		const pendingTasks = tasks.filter((task) => !task.done);
 
-		const mapPriorityToValue = (priority: string | undefined): number => {
-			const priorityValues: { [key: string]: number } = {
-				low: 0,
-				medium: 1,
-				high: 2,
-			};
-
-			if (!priority || !(priority in priorityValues)) {
-				return 0;
-			}
-
-			return priorityValues[priority];
-		};
-		const sortTasksByPriority = (isAscending: boolean) => {
-			return pendingTasks.sort((a, b) => {
-				const aValue = mapPriorityToValue(a.priority);
-				const bValue = mapPriorityToValue(b.priority);
-				return isAscending ? aValue - bValue : bValue - aValue;
-			});
-		};
-
-		const sortTasksByDueDate = (isEarly: boolean) => {
-			return pendingTasks.sort((a, b) => {
-				const aDate = new Date(a.due_date).getTime();
-				const bDate = new Date(b.due_date).getTime();
-				return isEarly ? aDate - bDate : bDate - aDate;
-			});
-		};
-
-		switch (e.target.value) {
+		switch (selectedOption) {
 			case "priority - (low - high)":
-				setTasks([...doneTasks, ...sortTasksByPriority(true)]);
+			case "priority - (high - low)": {
+				const isAsc = selectedOption === "priority - (low - high)";
+				const sortedTasks = sortByPriority(tasks, isAsc);
+				setTasks([...doneTasks, ...sortedTasks.filter((task) => !task.done)]);
 				break;
-			case "priority - (high - low)":
-				setTasks([...doneTasks, ...sortTasksByPriority(false)]);
-				break;
+			}
 			case "due date - (earliest - latest)":
-				setTasks([...doneTasks, ...sortTasksByDueDate(true)]);
+			case "due date - (latest - earliest)": {
+				const isEarliestToLatest =
+					selectedOption === "due date - (earliest - latest)";
+				const dueDateResult = await sortByDueDate(isEarliestToLatest);
+				const sortedTasks = dueDateResult.documents as ITask[];
+				setTasks([...doneTasks, ...sortedTasks.filter((task) => !task.done)]);
 				break;
-			case "due date - (latest - earliest)":
-				setTasks([...doneTasks, ...sortTasksByDueDate(false)]);
-				break;
+			}
 			default:
 				break;
 		}
@@ -77,11 +67,7 @@ const Task = () => {
 		"due date - (latest - earliest)",
 	];
 
-	const handleViewTask = (
-		e: React.MouseEvent<HTMLDivElement>,
-		activeTask: ITask
-	) => {
-		e.preventDefault();
+	const handleViewTask = (activeTask: ITask) => {
 		console.log("ACTIVE TASK" + activeTask);
 		setIsViewTask(true);
 		setSelectedTask(activeTask);
@@ -97,7 +83,6 @@ const Task = () => {
 				setTasksError("Error fetching tasks, please try again");
 			});
 	}, []);
-
 	return (
 		<main className="container mx-auto">
 			<section className="max-w-5xl mx-auto m-12 p-16">
@@ -105,7 +90,7 @@ const Task = () => {
 					<Dialog key={selectedTask.$id} setIsViewTask={setIsViewTask}>
 						<TaskItem
 							task={selectedTask}
-							handleViewTask={(e) => handleViewTask(e, selectedTask!)}
+							handleViewTask={() => handleViewTask(selectedTask!)}
 							isViewTask={isViewTask}
 						/>
 					</Dialog>
@@ -114,16 +99,14 @@ const Task = () => {
 					Your Tasks
 				</h1>
 				<div className="m-8 flex flex-col-reverse md:flex-row gap-8 items-start md:items-center md:justify-between">
-					<Search tasks={tasks} />
+					<Search />
 					<Button
+						handleClick={() => navigate("/")}
 						extraBtnClasses="bg-primary text-white font-medium py-2 hover:bg-primaryHover ml-auto"
-						content={{ text: "Add Task", icon: PlusIcon }}
-						iconClasses="hidden md:flex "
-						handleClick={(e) => {
-							e.preventDefault();
-							navigate("/");
-						}}
-					/>
+					>
+						<span>Add Task</span>
+						<PlusIcon height={25} className="hidden md:flex" />
+					</Button>
 				</div>
 				{tasksError ? (
 					<span className="m-8 text-error">{tasksError}</span>
@@ -147,7 +130,7 @@ const Task = () => {
 											key={task.$id}
 											task={task}
 											setTasks={setTasks}
-											handleViewTask={(e) => handleViewTask(e, task)}
+											handleViewTask={() => handleViewTask(task)}
 											isViewTask={isViewTask}
 										/>
 									))}
@@ -163,7 +146,7 @@ const Task = () => {
 											key={task.$id}
 											task={task}
 											setTasks={setTasks}
-											handleViewTask={(e) => handleViewTask(e, task)}
+											handleViewTask={() => handleViewTask(task)}
 											isViewTask={isViewTask}
 										/>
 									))}

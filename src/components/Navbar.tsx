@@ -1,16 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Select from "./Select";
 import Button from "./Button";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import Select from "./Select";
 import { useEffect, useState } from "react";
 
-interface NavbarProps {
-	resetNavigation?: boolean;
-}
-
-const Navbar = ({ resetNavigation = false }: NavbarProps) => {
-	const navigate = useNavigate();
-
+const Navbar = () => {
 	const themeArray = ["light", "dark", "system"];
 	const [theme, setTheme] = useState(() => {
 		return localStorage.getItem("theme") || themeArray[2];
@@ -31,7 +25,6 @@ const Navbar = ({ resetNavigation = false }: NavbarProps) => {
 	};
 
 	const handleSelectTheme = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		e.preventDefault();
 		const selectedTheme = e.target.value;
 		setTheme(selectedTheme);
 
@@ -46,21 +39,11 @@ const Navbar = ({ resetNavigation = false }: NavbarProps) => {
 	return (
 		<nav className="py-4 border-b-2 border-container shadow-md shadow-gray-400 w-full fixed top-0 bg-base">
 			<ul className="flex items-center justify-between  w-11/12 mx-auto">
-				<Link
-					to="/"
-					onClick={(e) => {
-						e.preventDefault();
-						resetNavigation ? navigate(0) : navigate("/");
-					}}
-				>
-					<Button
-						content={{
-							text: "Taskwrite",
-							icon: PencilIcon,
-						}}
-						textClasses="font-semibold text-main"
-						iconClasses="text-main"
-					/>
+				<Link to="/">
+					<Button>
+						<span className="font-semibold text-main">Taskwrite</span>
+						<PencilIcon height={20} className="text-main" />
+					</Button>
 				</Link>
 				<div className="flex items-center justify-between gap-6">
 					<Link

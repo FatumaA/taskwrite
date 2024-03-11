@@ -32,11 +32,7 @@ function TaskItem({
 		}
 	};
 
-	const handleEdit = async (
-		e: React.MouseEvent<HTMLButtonElement>,
-		currentTask: ITask
-	) => {
-		e.preventDefault();
+	const handleEdit = async (currentTask: ITask) => {
 		navigate("/", { state: { task: currentTask } });
 	};
 
@@ -44,11 +40,14 @@ function TaskItem({
 		e: React.MouseEvent<HTMLButtonElement>,
 		currentTaskId: string
 	) => {
-		e.preventDefault();
 		e.stopPropagation();
 		try {
 			await deleteDocument(currentTaskId);
-			updateTasks();
+			if (isViewTask) {
+				navigate(0);
+			} else {
+				updateTasks();
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -57,16 +56,14 @@ function TaskItem({
 	const handleCheckbox = async (
 		currentTask: IPayload,
 		id: string,
-		checkedVal: boolean
+		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		if (!checkedVal) return;
-
 		const payload: IPayload = {
 			title: currentTask.title,
 			description: currentTask.description,
 			due_date: currentTask.due_date,
 			priority: currentTask.priority,
-			done: checkedVal,
+			done: e.target.checked,
 		};
 
 		try {
@@ -107,19 +104,20 @@ function TaskItem({
 						<div className="flex gap-2 py-1 ml-auto">
 							{!task.done && (
 								<Button
+									handleClick={() => handleEdit(task)}
 									extraBtnClasses="bg-ok"
-									content={{ text: "Edit", icon: PencilSquareIcon }}
-									iconClasses="hidden lg:flex"
-									handleClick={(e) => handleEdit(e, task)}
-								/>
+								>
+									<span className="font-medium">Edit</span>
+									<PencilSquareIcon height={25} className="hidden lg:flex" />
+								</Button>
 							)}
-
 							<Button
-								extraBtnClasses="bg-highPriority"
-								content={{ text: "Delete", icon: TrashIcon }}
-								iconClasses="hidden lg:flex"
 								handleClick={(e) => handleDelete(e, task.$id)}
-							/>
+								extraBtnClasses="bg-highPriority"
+							>
+								<span className="font-medium">Delete</span>
+								<TrashIcon height={25} className="hidden lg:flex" />
+							</Button>
 						</div>
 					</section>
 					<section className="">
@@ -151,9 +149,10 @@ function TaskItem({
 								<input
 									type="checkbox"
 									checked={isDone}
+									onClick={(e) => e.stopPropagation()}
 									onChange={(e) => {
 										setIsDone(e.target.checked);
-										handleCheckbox(task, task.$id, e.target.checked);
+										handleCheckbox(task, task.$id, e);
 									}}
 									className="size-5 accent-pink-600 rounded-sm"
 								/>

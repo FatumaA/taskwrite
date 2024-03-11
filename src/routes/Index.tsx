@@ -1,7 +1,9 @@
+//
+
 import { useEffect, useState } from "react";
+import AddTask from "../components/AddTask";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ITask } from "../models/interface";
-import AddTask from "../components/AddTask";
 
 const Index = () => {
 	const location = useLocation();
@@ -12,8 +14,10 @@ const Index = () => {
 	const [taskToEdit] = useState<ITask | null>(taskFromState ?? null);
 
 	useEffect(() => {
-		navigate("/", { state: undefined });
-	}, [navigate, taskFromState]);
+		if (taskFromState) {
+			navigate(location.pathname, {});
+		}
+	}, [taskFromState, location.pathname, navigate]);
 
 	return (
 		<main className="container mx-auto">

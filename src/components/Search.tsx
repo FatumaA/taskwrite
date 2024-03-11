@@ -3,17 +3,15 @@ import { ITask } from "../models/interface";
 import Dialog from "./Dialog";
 import TaskItem from "./TaskItem";
 import Button from "./Button";
+import { searchTasks } from "../utils/db";
 
-interface SearchProps {
-	tasks: ITask[];
-}
-
-const Search = ({ tasks }: SearchProps) => {
+const Search = () => {
 	const [searchTerm, setSearchTerm] = useState("");
+	const [isSearching, setIsSearching] = useState(false);
 	const [searchedTasks, setSearchedTasks] = useState<ITask[]>([]);
 	const [error, setError] = useState("");
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!searchTerm) {
 			setError("No search term entered");
@@ -23,14 +21,12 @@ const Search = ({ tasks }: SearchProps) => {
 			return;
 		}
 
-		const caseInsensitiveSearchTerm = searchTerm.toLowerCase();
+		setIsSearching(true);
 
-		const filteredTasks = tasks.filter(
-			(task) =>
-				task.title.toLowerCase().includes(caseInsensitiveSearchTerm) ||
-				task.description.toLowerCase().includes(caseInsensitiveSearchTerm)
-		);
-		if (filteredTasks.length === 0) {
+		const res = await searchTasks(searchTerm);
+		console.log("res search: ", res);
+		if (res.length === 0) {
+			setIsSearching(false);
 			setError("No task found");
 			setTimeout(() => {
 				setSearchTerm("");
@@ -38,7 +34,8 @@ const Search = ({ tasks }: SearchProps) => {
 			}, 3000);
 			return;
 		}
-		setSearchedTasks(filteredTasks);
+		setIsSearching(false);
+		setSearchedTasks(res as ITask[]);
 	};
 	return (
 		<div className="flex flex-col w-full md:w-1/2">
@@ -68,9 +65,10 @@ const Search = ({ tasks }: SearchProps) => {
 				/>
 				<Button
 					type="submit"
-					content={{ text: "Search" }}
-					extraBtnClasses="bg-primary text-white hover:bg-primaryHover font-medium text-main py-2 "
-				/>
+					extraBtnClasses="bg-primary text-white hover:bg-primaryHover font-medium text-main py-2"
+				>
+					<span>{isSearching ? "Searching..." : "Search"}</span>
+				</Button>
 			</form>
 			<span className="text-error font-medium mt-1">{error}</span>
 		</div>
