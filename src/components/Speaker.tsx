@@ -10,8 +10,7 @@ interface SpeakerProps {
 function Speaker({ handleClear }: SpeakerProps) {
 	const { listening, error } = useSpeechToTextHelper();
 
-	const handleSpeech = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const handleSpeech = () => {
 		SpeechRecognition.startListening();
 	};
 
@@ -21,18 +20,20 @@ function Speaker({ handleClear }: SpeakerProps) {
 			<div className="flex gap-2 py-1 items-center text-center justify-center">
 				<span className="font-medium">{listening ? "Mic on" : "Mic off"}</span>
 				<Button
+					handleClick={handleSpeech}
 					extraBtnClasses="bg-lightOk"
 					title="Start"
-					content={{ icon: MicrophoneIcon }}
-					handleClick={handleSpeech}
-				/>
+				>
+					<MicrophoneIcon height={25} />
+				</Button>
 				<Button
-					type="reset"
-					extraBtnClasses="bg-light"
-					title="reset"
-					content={{ icon: XCircleIcon }}
 					handleClick={handleClear}
-				/>
+					extraBtnClasses="bg-light"
+					type="reset"
+					title="Reset"
+				>
+					<XCircleIcon height={25} />
+				</Button>
 			</div>
 		</div>
 	);

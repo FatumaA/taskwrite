@@ -1,21 +1,18 @@
-import { SparklesIcon } from "@heroicons/react/24/solid";
-import { createDocument, updateDocument } from "../utils/db";
-import { IPayload, ITask } from "../models/interface";
-import { callAI } from "../utils/ai";
 import { useEffect, useState } from "react";
-import Speaker from "../components/Speaker";
-import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 import Select from "./Select";
-import { useNavigate } from "react-router-dom";
-import { getTasks } from "../utils/shared";
 import Button from "./Button";
+import { createDocument, updateDocument } from "../utils/db";
+import { useNavigate } from "react-router-dom";
+import { IPayload, ITask } from "../models/interface";
+import { getTasks } from "../utils/shared";
+import { callAI } from "../utils/ai";
+import { SparklesIcon } from "@heroicons/react/24/solid";
+import Speaker from "./Speaker";
+import { useSpeechToTextHelper } from "../hooks/useSpeechToTextHelper";
 
-// pass a task and an isEdit boolean
-// if isEdit is true, then the form will be populated with the task's data
 interface ITaskFormProps {
 	task: ITask | null;
 	isEdit?: boolean;
-	setIsEdit?: (isEdit: boolean) => void;
 	setTasks?: (tasks: ITask[]) => void;
 }
 
@@ -23,14 +20,14 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 	const navigate = useNavigate();
 	const { transcript, resetTranscript } = useSpeechToTextHelper();
 
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [isGenerating, setIsGenerating] = useState(false);
-
 	const [titleVal, setTitleVal] = useState("");
 	const [textAreaVal, setTextAreaVal] = useState("");
 	const [dueDate, setDueDate] = useState(
 		isEdit && task?.due_date ? new Date(task.due_date) : new Date()
 	);
+
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isGenerating, setIsGenerating] = useState(false);
 
 	const priorityArray = ["low", "medium", "high"];
 
@@ -41,7 +38,7 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 	const [titleValidationError, setTitleValidationError] = useState("");
 
 	useEffect(() => {
-		if (isEdit && task) {
+		if (isEdit && task && !transcript) {
 			setTitleVal(task.title);
 			setTextAreaVal(task.description);
 		} else {
@@ -57,8 +54,7 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 		}
 	};
 
-	const clearTranscript = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const clearTranscript = () => {
 		resetTranscript();
 	};
 
@@ -105,15 +101,14 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 			setPriority(priorityArray[0]);
 			setTitleValidationError("");
 			setIsSubmitting(false);
-			navigate("/tasks", { replace: true });
+			navigate("/tasks");
 		} catch (error) {
 			console.error("Error in handleSubmitTask:", error);
 			setIsSubmitting(false);
 		}
 	};
 
-	const generateDesc = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const generateDesc = async () => {
 		setTextAreaVal("");
 
 		if (!titleVal) {
@@ -186,13 +181,12 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 				)}
 				<Button
 					handleClick={generateDesc}
-					content={{
-						text: "Generate description",
-						icon: SparklesIcon,
-					}}
+					disable={isGenerating}
 					extraBtnClasses="bg-light mt-2 w-fit ml-auto"
-					iconClasses="h-5"
-				/>
+				>
+					<span>Generate description</span>
+					<SparklesIcon height={20} />
+				</Button>
 			</div>
 			<div className="flex flex-col mb-6">
 				<label htmlFor="description" className="mb-1">
@@ -219,16 +213,13 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 			</div>
 			<Button
 				type="submit"
-				content={{
-					text: isSubmitting
-						? "isSubmitting..."
-						: task
-						? "Edit Task"
-						: "Add Task",
-				}}
 				disable={isSubmitting}
 				extraBtnClasses="bg-primary justify-center text-white font-semibold px-4 py-2 outline-1 hover:bg-primaryHover focus:ring-1 focus:ring-pink-800 w-full"
-			/>
+			>
+				<span>
+					{isSubmitting ? "Submitting..." : task ? "Edit Task" : "Add Task"}
+				</span>
+			</Button>
 		</form>
 	);
 };
