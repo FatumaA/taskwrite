@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 function App() {
 	return (
 		<>
-			<Navbar resetNavigation={true} />
+			<Navbar />
 			<Routes>
 				<Route path="/" element={<Index />} />
 				<Route path="/tasks" element={<Task />} />
