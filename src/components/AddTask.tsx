@@ -117,7 +117,7 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 		}
 		setIsGenerating(true);
 
-		const prompt = `Provide a description for this task: ${titleVal}. Keep the description to a maximum of 30 words.`;
+		const prompt = `Provide a description for this task: ${titleVal}. Keep the description to a maximum of 30 words. Do NOT include a leading "Task" in the description`;
 
 		try {
 			const res = await callAI(prompt);
