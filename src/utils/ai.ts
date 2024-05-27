@@ -1,5 +1,4 @@
 import { HfInference } from "@huggingface/inference";
-// import { HuggingFaceStream, StreamingTextResponse } from "ai";
 
 // Create a new HuggingFace Inference instance
 const Hf = new HfInference(import.meta.env.VITE_HUGGINGFACE_KEY);
@@ -21,10 +20,5 @@ export const callAI = async (prompt: string) => {
 		},
 	});
 
-	// Convert the response into a friendly text-stream
-	// const stream = HuggingFaceStream(response);
-
-	// Respond with the stream
-	// return new StreamingTextResponse(stream);
 	return response;
 };
