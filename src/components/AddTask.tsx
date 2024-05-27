@@ -117,11 +117,11 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 		}
 		setIsGenerating(true);
 
-		const prompt = `Provide a description for this task: ${titleVal}. Keep the description to a maximum of 30 words`;
+		const prompt = `generate concise description of 5 words for task Given task title ${titleVal} without including any explicit details`;
 
 		try {
 			const res = await callAI(prompt);
-			const responseText = await res.text();
+			const responseText = res.generated_text;
 
 			setIsGenerating(false);
 
@@ -165,18 +165,18 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 				<textarea
 					id="description"
 					placeholder="Describe your task"
-					maxLength={200}
+					maxLength={500}
 					value={isGenerating ? "generating..." : textAreaVal}
 					onChange={(e) => setTextAreaVal(e.target.value)}
 					className={`bg-inherit border rounded-sm p-2 h-32 resize-none focus:outline-none focus:ring-1 ${
-						textAreaVal.length > 197
+						textAreaVal.length > 497
 							? "border-error focus:ring-red-500 invalid:focus:ring-red-600"
 							: "border-input focus:ring-slate-900"
 					}`}
 				/>
-				{textAreaVal.length > 197 && (
+				{textAreaVal.length > 497 && (
 					<span className="text-error mt-1">
-						Warning description getting too long. Can only be 200 characters
+						Warning description getting too long. Can only be 500 characters
 					</span>
 				)}
 				<Button
