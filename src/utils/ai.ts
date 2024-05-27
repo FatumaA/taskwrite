@@ -1,5 +1,5 @@
 import { HfInference } from "@huggingface/inference";
-import { HuggingFaceStream, StreamingTextResponse } from "ai";
+// import { HuggingFaceStream, StreamingTextResponse } from "ai";
 
 // Create a new HuggingFace Inference instance
 const Hf = new HfInference(import.meta.env.VITE_HUGGINGFACE_KEY);
@@ -8,8 +8,8 @@ const Hf = new HfInference(import.meta.env.VITE_HUGGINGFACE_KEY);
 export const runtime = "edge";
 
 export const callAI = async (prompt: string) => {
-	const response = Hf.textGenerationStream({
-		model: "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5",
+	const response = Hf.textGeneration({
+		model: "mistralai/Mistral-7B-Instruct-v0.3",
 		inputs: `<|prompter|>${prompt}<|endoftext|><|assistant|>`,
 		parameters: {
 			max_new_tokens: 200,
@@ -22,8 +22,9 @@ export const callAI = async (prompt: string) => {
 	});
 
 	// Convert the response into a friendly text-stream
-	const stream = HuggingFaceStream(response);
+	// const stream = HuggingFaceStream(response);
 
 	// Respond with the stream
-	return new StreamingTextResponse(stream);
+	// return new StreamingTextResponse(stream);
+	return response;
 };
