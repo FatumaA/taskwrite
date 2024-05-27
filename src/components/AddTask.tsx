@@ -121,7 +121,7 @@ const AddTask = ({ task, isEdit, setTasks }: ITaskFormProps) => {
 
 		try {
 			const res = await callAI(prompt);
-			const responseText = res.generated_text;
+			const responseText = await res.text();
 
 			setIsGenerating(false);
 
